@@ -11,27 +11,9 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-    ];
-});
-
-/**
- * Factory definition for model User.
- */
-$factory->define(User::class, function ($faker) {
-    return [
-        // Fields here
-    ];
-});
-
-/**
- * Factory definition for model Tiii.
- */
-$factory->define(Tiii::class, function ($faker) {
-    return [
-        // Fields here
-    ];
-});
+//$factory->define(App\User::class, function (Faker\Generator $faker) {
+    //return [
+        //'name' => $faker->name,
+        //'email' => $faker->email,
+    //];
+//});
