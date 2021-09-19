@@ -23,7 +23,7 @@ class ImageTest extends TestCase
 
     }
 
-    public function testTestFunction() {
+    /*public function testTestFunction() {
         //$response = $this->call('GET', '/image/test');
 
         //$this->assertEquals(200, $response->status());
@@ -31,5 +31,5 @@ class ImageTest extends TestCase
         $this->json('GET', '/image/test')
         ->seeJsonStructure(['id', 'urls']);
         //->seeJson(['url' => true]);
-    }
+    }*/
 }

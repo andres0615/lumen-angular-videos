@@ -17,6 +17,7 @@ class CreateLikesVideosTable extends Migration
             $table->primary(['user_id','video_id'], 'pkey_likes_videos');
             $table->integer('user_id')->unsigned();
             $table->integer('video_id')->unsigned();
+            $table->boolean('type')->default(null)->nullable();
             $table->timestamps();
         });
     }
