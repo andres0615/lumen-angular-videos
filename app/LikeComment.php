@@ -1,14 +1,15 @@
-<?php 
+<?php
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LikeComment extends Model {
+class LikeComment extends Model
+{
 
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'likes_comments';
@@ -23,5 +24,4 @@ class LikeComment extends Model {
     protected $fillable = [
         'user_id', 'comment_id', 'type', 'created_at', 'updated_at',
     ];
-
 }

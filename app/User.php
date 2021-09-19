@@ -14,7 +14,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'users';

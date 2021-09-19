@@ -13,17 +13,21 @@ class AddForeignKeysUserIdAndVideoIdToLikesVideosTable extends Migration
      */
     public function up()
     {
-        Schema::table('likes_videos', function(Blueprint $table)
-        {
-
+        Schema::table('likes_videos', function (Blueprint $table) {
             $foreignKeyName = $this->getForeignKeyName(
-                'likes_videos', 'user_id', 'users', 'id'
+                'likes_videos',
+                'user_id',
+                'users',
+                'id'
             );
 
             $table->foreign('user_id', $foreignKeyName)->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
 
             $foreignKeyName = $this->getForeignKeyName(
-                'likes_videos', 'video_id', 'videos', 'id'
+                'likes_videos',
+                'video_id',
+                'videos',
+                'id'
             );
 
             $table->foreign('video_id', $foreignKeyName)->references('id')->on('videos')->onUpdate('RESTRICT')->onDelete('RESTRICT');
@@ -37,20 +41,19 @@ class AddForeignKeysUserIdAndVideoIdToLikesVideosTable extends Migration
      */
     public function down()
     {
-        Schema::table('likes_videos', function(Blueprint $table)
-        {
+        Schema::table('likes_videos', function (Blueprint $table) {
             $table->dropForeign('likes_videos_user_id_users_id');
             $table->dropForeign('likes_videos_video_id_videos_id');
         });
     }
 
-    public function getForeignKeyName($localTableName, $localColumnName, $foreignTableName, $foreignColumnName) {
-
+    public function getForeignKeyName($localTableName, $localColumnName, $foreignTableName, $foreignColumnName)
+    {
         $foreignKeyNameArray = [
                 $localTableName,$localColumnName,$foreignTableName,$foreignColumnName
             ];
 
-        $foreignKeyName = implode('_',$foreignKeyNameArray);
+        $foreignKeyName = implode('_', $foreignKeyNameArray);
 
         return $foreignKeyName;
     }

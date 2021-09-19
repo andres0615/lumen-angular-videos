@@ -1,14 +1,15 @@
-<?php 
+<?php
 
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class LikeVideo extends Model {
+class LikeVideo extends Model
+{
 
     /**
      * The table associated with the model.
-     * 
+     *
      * @var string
      */
     protected $table = 'likes_videos';
@@ -23,5 +24,4 @@ class LikeVideo extends Model {
     protected $fillable = [
         'user_id', 'video_id', 'type', 'created_at', 'updated_at',
     ];
-
 }

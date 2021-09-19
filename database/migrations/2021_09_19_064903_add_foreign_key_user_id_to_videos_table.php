@@ -13,8 +13,7 @@ class AddForeignKeyUserIdToVideosTable extends Migration
      */
     public function up()
     {
-        Schema::table('videos', function(Blueprint $table)
-        {
+        Schema::table('videos', function (Blueprint $table) {
             $table->foreign('user_id', 'videos_user_id_users_id')->references('id')->on('users')->onUpdate('RESTRICT')->onDelete('RESTRICT');
         });
     }
@@ -26,8 +25,7 @@ class AddForeignKeyUserIdToVideosTable extends Migration
      */
     public function down()
     {
-        Schema::table('videos', function(Blueprint $table)
-        {
+        Schema::table('videos', function (Blueprint $table) {
             $table->dropForeign('videos_user_id_users_id');
         });
     }
