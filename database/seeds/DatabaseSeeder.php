@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\User;
+use App\Video;
+use App\LikeVideo;
+use App\Comment;
+use App\LikeComment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,5 +17,11 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
+
+        factory(User::class, 10)->create();
+        factory(Video::class, 5)->create();
+        factory(LikeVideo::class, 5)->create();
+        factory(Comment::class, 10)->create();
+        factory(LikeComment::class, 5)->create();
     }
 }

@@ -2,8 +2,10 @@
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
+use App\Video;
+use Illuminate\Support\Facades\Log;
 
-class ImageTest extends TestCase
+class VideoTest extends TestCase
 {
     /**
      * A basic test example.
@@ -22,13 +24,10 @@ class ImageTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    /*public function testTestFunction() {
-        //$response = $this->call('GET', '/image/test');
-
-        //$this->assertEquals(200, $response->status());
-
-        $this->json('GET', '/image/test')
-        ->seeJsonStructure(['id', 'urls']);
-        //->seeJson(['url' => true]);
-    }*/
+    public function testVideoFactory(){
+    	$video = factory(Video::class)->create();
+    	//Log::info($video);
+		$this->assertInstanceOf(Video::class, $video);
+        $video->delete();
+    }
 }

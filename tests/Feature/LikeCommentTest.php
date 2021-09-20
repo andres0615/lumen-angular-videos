@@ -2,10 +2,10 @@
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
-use App\User;
+use App\LikeComment;
 use Illuminate\Support\Facades\Log;
 
-class UserTest extends TestCase
+class LikeCommentTest extends TestCase
 {
     /**
      * A basic test example.
@@ -24,10 +24,12 @@ class UserTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    public function testUserFactory(){
-    	$user = factory(User::class)->create();
-    	//Log::info($user);
-		$this->assertInstanceOf(User::class, $user);
-        $user->delete();
+    public function testLikeCommentFactory(){
+    	$likeComment = factory(LikeComment::class)->create();
+    	Log::info($likeComment);
+		$this->assertInstanceOf(LikeComment::class, $likeComment);
+        LikeComment::where('user_id', $likeComment->user_id)
+        ->where('comment_id', $likeComment->comment_id)
+        ->delete();
     }
 }

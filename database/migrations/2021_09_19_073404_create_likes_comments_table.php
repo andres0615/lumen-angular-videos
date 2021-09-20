@@ -17,7 +17,7 @@ class CreateLikesCommentsTable extends Migration
             $table->primary(['user_id','comment_id'], 'pkey_likes_comments');
             $table->integer('user_id')->unsigned();
             $table->integer('comment_id')->unsigned();
-            $table->boolean('type')->default(null)->nullable();
+            $table->boolean('type');
             $table->timestamps();
         });
     }
