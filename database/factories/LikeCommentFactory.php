@@ -19,7 +19,6 @@ use App\LikeComment;
 $factory->define(App\LikeComment::class, function (
     Faker\Generator $faker
 ) {
-
     $user = factory(User::class)->create();
     $comment = factory(Comment::class)->create();
 

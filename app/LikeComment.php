@@ -22,6 +22,6 @@ class LikeComment extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'comment_id', 'type', 'created_at', 'updated_at', 'pkey_likes_comments',
+        'user_id', 'comment_id', 'type', 'created_at', 'updated_at',
     ];
 }

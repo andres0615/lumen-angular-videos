@@ -24,10 +24,11 @@ class LikeVideoTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    public function testLikeVideoFactory(){
-    	$likeVideo = factory(LikeVideo::class)->create();
-    	//Log::info($comment);
-		$this->assertInstanceOf(LikeVideo::class, $likeVideo);
+    public function testLikeVideoFactory()
+    {
+        $likeVideo = factory(LikeVideo::class)->create();
+        //Log::info($comment);
+        $this->assertInstanceOf(LikeVideo::class, $likeVideo);
         LikeVideo::where('user_id', $likeVideo->user_id)
         ->where('video_id', $likeVideo->video_id)
         ->delete();

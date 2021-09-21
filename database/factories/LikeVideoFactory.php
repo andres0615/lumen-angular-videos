@@ -18,7 +18,6 @@ use App\Video;
 $factory->define(App\LikeVideo::class, function (
     Faker\Generator $faker
 ) {
-
     $user = factory(User::class)->create();
     $video = factory(Video::class)->create();
 

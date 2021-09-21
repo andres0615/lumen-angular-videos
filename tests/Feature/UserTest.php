@@ -24,10 +24,11 @@ class UserTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    public function testUserFactory(){
-    	$user = factory(User::class)->create();
-    	//Log::info($user);
-		$this->assertInstanceOf(User::class, $user);
+    public function testUserFactory()
+    {
+        $user = factory(User::class)->create();
+        //Log::info($user);
+        $this->assertInstanceOf(User::class, $user);
         $user->delete();
     }
 }

@@ -24,10 +24,11 @@ class VideoTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    public function testVideoFactory(){
-    	$video = factory(Video::class)->create();
-    	//Log::info($video);
-		$this->assertInstanceOf(Video::class, $video);
+    public function testVideoFactory()
+    {
+        $video = factory(Video::class)->create();
+        //Log::info($video);
+        $this->assertInstanceOf(Video::class, $video);
         $video->delete();
     }
 }

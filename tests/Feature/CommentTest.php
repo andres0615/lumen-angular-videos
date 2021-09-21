@@ -24,10 +24,11 @@ class CommentTest extends TestCase
         //$this->json()->seeJson();
     }
 
-    public function testCommentFactory(){
-    	$comment = factory(Comment::class)->create();
-    	//Log::info($comment);
-		$this->assertInstanceOf(Comment::class, $comment);
+    public function testCommentFactory()
+    {
+        $comment = factory(Comment::class)->create();
+        //Log::info($comment);
+        $this->assertInstanceOf(Comment::class, $comment);
         $comment->delete();
     }
 }

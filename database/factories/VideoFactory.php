@@ -17,7 +17,6 @@ use App\User;
 $factory->define(App\Video::class, function (
     Faker\Generator $faker
 ) {
-
     $user = factory(User::class)->create();
     
     //Log::info('------'.$user.'-------');
