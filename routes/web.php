@@ -26,3 +26,14 @@ $router->get('/', function () use ($router) {
 
 
 //$router->get('image/test', 'ImageControllersController@test');
+
+
+
+/**
+ * Routes for resource user
+ */
+$router->get('user', 'UserController@all');
+$router->get('user/{id}', 'UserController@get');
+$router->post('user', 'UserController@store');
+$router->put('user/{id}', 'UserController@update');
+$router->delete('user/{id}', 'UserController@delete');

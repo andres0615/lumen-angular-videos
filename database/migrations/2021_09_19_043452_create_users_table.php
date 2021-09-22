@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('username', 100);
             $table->string('password', 100);
-            $table->string('photo', 200);
+            $table->string('photo', 200)->default('/user/default_user.png');
             $table->timestamps();
         });
     }

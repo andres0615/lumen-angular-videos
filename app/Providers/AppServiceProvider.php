@@ -16,6 +16,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment() == 'local') {
             $this->app->register('Wn\Generators\CommandsServiceProvider');
             $this->app->register('STS\Fixer\FixerServiceProvider');
+            $this->app->register('Thedevsaddam\LumenRouteList\LumenRouteListServiceProvider');
         }
 
         $this->app->register('App\Services\DropBoxService');

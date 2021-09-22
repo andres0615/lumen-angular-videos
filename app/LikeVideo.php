@@ -22,6 +22,6 @@ class LikeVideo extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'video_id', 'type', 'created_at', 'updated_at', 'pkey_likes_videos',
+        'user_id', 'video_id', 'type', 'created_at', 'updated_at',
     ];
 }

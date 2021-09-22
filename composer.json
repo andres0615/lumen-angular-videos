@@ -16,7 +16,8 @@
         "fzaninotto/faker": "~1.4",
         "phpunit/phpunit": "~6.0",
         "mockery/mockery": "~0.9",
-        "stechstudio/laravel-php-cs-fixer": "2.3.0"
+        "stechstudio/laravel-php-cs-fixer": "2.3.0",
+        "thedevsaddam/lumen-route-list": "^2.0"
     },
     "autoload": {
         "psr-4": {
