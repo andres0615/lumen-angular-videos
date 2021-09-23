@@ -63,6 +63,8 @@ class UserController extends Controller {
 
         }
 
+        $user->touch();
+
         $user->save();
 
         return response()->json($user);

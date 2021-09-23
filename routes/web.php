@@ -37,3 +37,12 @@ $router->get('user/{id}', 'UserController@get');
 $router->post('user', 'UserController@store');
 $router->put('user/{id}', 'UserController@update');
 $router->delete('user/{id}', 'UserController@delete');
+
+/**
+ * Routes for resource video
+ */
+$router->get('video', 'VideoController@all');
+$router->get('video/{id}', 'VideoController@get');
+$router->post('video', 'VideoController@store');
+$router->put('video/{id}', 'VideoController@update');
+$router->delete('video/{id}', 'VideoController@delete');

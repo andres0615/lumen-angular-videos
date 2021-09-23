@@ -74,7 +74,7 @@ class UserTest extends TestCase
         $payload = [
             'username' => $faker->userName,
             'password' => $faker->password,
-            
+            'photo' => $file
         ];
 
         $response = $this->call('POST', '/user', $payload);
@@ -124,11 +124,11 @@ class UserTest extends TestCase
         $this->assertEquals(200, $response->status());
     }
 
-    public function getObjectContent($object) {
-        ob_start();
-        var_dump($object);
-        $contents = ob_get_contents();
-        ob_end_clean();
-        return $contents;
-    }
+    //public function getObjectContent($object) {
+        //ob_start();
+        //var_dump($object);
+        //$contents = ob_get_contents();
+        //ob_end_clean();
+        //return $contents;
+    //}
 }
