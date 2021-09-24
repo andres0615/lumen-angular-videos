@@ -62,3 +62,10 @@ $router->delete('comment/{id}', 'CommentController@delete');
 $router->get('like-comment/{userId}/{commentId}', 'LikeCommentController@get');
 $router->post('like-comment', 'LikeCommentController@store');
 $router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@delete');
+
+/**
+ * Routes for resource like-video
+ */
+$router->get('like-video/{userId}/{videoId}', 'LikeVideoController@get');
+$router->post('like-video', 'LikeVideoController@store');
+$router->delete('like-video/{userId}/{videoId}', 'LikeVideoController@delete');

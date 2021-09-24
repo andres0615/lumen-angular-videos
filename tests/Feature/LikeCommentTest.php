@@ -12,8 +12,9 @@ class LikeCommentTest extends TestCase
     public function testLikeCommentFactory()
     {
         $likeComment = factory(LikeComment::class)->create();
-        Log::info($likeComment);
+
         $this->assertInstanceOf(LikeComment::class, $likeComment);
+        
         LikeComment::where('user_id', $likeComment->user_id)
         ->where('comment_id', $likeComment->comment_id)
         ->delete();
