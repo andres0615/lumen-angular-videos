@@ -55,3 +55,10 @@ $router->get('comment/{id}', 'CommentController@get');
 $router->post('comment', 'CommentController@store');
 $router->put('comment/{id}', 'CommentController@update');
 $router->delete('comment/{id}', 'CommentController@delete');
+
+/**
+ * Routes for resource like-comment
+ */
+$router->get('like-comment/{userId}/{commentId}', 'LikeCommentController@get');
+$router->post('like-comment', 'LikeCommentController@store');
+$router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@delete');
