@@ -10,23 +10,6 @@ use Illuminate\Support\Facades\Storage;
 
 class VideoTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->get('/');
-
-        $this->assertEquals(
-            $this->app->version(),
-            $this->response->getContent()
-        );
-
-        //$this->json()->seeJson();
-    }
-
     public function testVideoFactory()
     {
         $video = factory(Video::class)->create();
@@ -35,41 +18,43 @@ class VideoTest extends TestCase
         $video->delete();
     }
 
-    public function testAllFunction() {
+    public function testAllFunction()
+    {
         $this->json('GET', '/video')
         ->seeJsonStructure([
             [
-                'id', 
-                'title', 
-                'description', 
-                'video', 
-                'thumbnail', 
-                'user_id', 
-                'created_at', 
+                'id',
+                'title',
+                'description',
+                'video',
+                'thumbnail',
+                'user_id',
+                'created_at',
                 'updated_at'
             ]
         ]);
     }
 
-    public function testGetFunction() {
+    public function testGetFunction()
+    {
         $id = Video::all()->shuffle()->first()->id;
         $url = '/video/' . $id;
 
         $this->json('GET', $url)
         ->seeJsonStructure([
-                'id', 
-                'title', 
-                'description', 
-                'video', 
-                'thumbnail', 
-                'user_id', 
-                'created_at', 
+                'id',
+                'title',
+                'description',
+                'video',
+                'thumbnail',
+                'user_id',
+                'created_at',
                 'updated_at'
             ]);
     }
 
-    public function testStoreFunction() {
-
+    public function testStoreFunction()
+    {
         $faker = Faker\Factory::create();
 
         $name = 'test.mp4';
@@ -89,14 +74,11 @@ class VideoTest extends TestCase
 
         $response = $this->call('POST', '/video', $payload);
 
-        //Log::info($this->getObjectContent($response->getContent()));
-
         $this->assertEquals(200, $response->status());
-
     }
 
-    public function testUpdateFunction() {
-
+    public function testUpdateFunction()
+    {
         $faker = Faker\Factory::create();
 
         $video = Video::all()->shuffle()->first();
@@ -105,30 +87,18 @@ class VideoTest extends TestCase
         $name = 'test.mp4';
         $path = storage_path($name);
 
-        /*$file = new UploadedFile($path, $name, filesize($path), 'video/mp4', null, true);
-
-        $user = User::all()->shuffle()->first();*/
-
         $payload = [
             'title' => $faker->sentence,
             'description' => $faker->sentence,
-            /*'video' => $file,
-            'thumbnail' => '/video/test.jpg',
-            'user_id' => $user->id*/
         ];
-
-        //Log::info('/user/' . $id);
 
         $response = $this->call('put', '/video/' . $id, $payload);
 
-        //Log::info($this->getObjectContent($response->getContent()));
-
         $this->assertEquals(200, $response->status());
-
     }
 
-    public function testDeleteFunction() {
-
+    public function testDeleteFunction()
+    {
         $video = Video::all()->shuffle()->first();
         $id = $video->id;
 
@@ -136,17 +106,15 @@ class VideoTest extends TestCase
 
         $response = $this->call('delete', $url);
 
-        //Log::info($this->getObjectContent($response->getContent()));
-
         $this->assertEquals(200, $response->status());
     }
 
-    public function getObjectContent($object) {
+    public function getObjectContent($object)
+    {
         ob_start();
         var_dump($object);
         $contents = ob_get_contents();
         ob_end_clean();
         return $contents;
     }
-
 }

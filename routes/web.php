@@ -46,3 +46,12 @@ $router->get('video/{id}', 'VideoController@get');
 $router->post('video', 'VideoController@store');
 $router->put('video/{id}', 'VideoController@update');
 $router->delete('video/{id}', 'VideoController@delete');
+
+/**
+ * Routes for resource comment
+ */
+$router->get('comment', 'CommentController@all');
+$router->get('comment/{id}', 'CommentController@get');
+$router->post('comment', 'CommentController@store');
+$router->put('comment/{id}', 'CommentController@update');
+$router->delete('comment/{id}', 'CommentController@delete');

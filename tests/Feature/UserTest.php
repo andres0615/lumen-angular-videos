@@ -35,7 +35,8 @@ class UserTest extends TestCase
         $user->delete();
     }
 
-    public function testAllFunction() {
+    public function testAllFunction()
+    {
         $this->json('GET', '/user')
         ->seeJsonStructure([
             [
@@ -48,8 +49,8 @@ class UserTest extends TestCase
         ]);
     }
 
-    public function testGetFunction() {
-
+    public function testGetFunction()
+    {
         $id = User::all()->shuffle()->first()->id;
         $url = '/user/' . $id;
 
@@ -65,8 +66,8 @@ class UserTest extends TestCase
         );
     }
 
-    public function testStoreFunction() {
-
+    public function testStoreFunction()
+    {
         $faker = Faker\Factory::create();
 
         $file = UploadedFile::fake()->image('avatar.jpg');
@@ -82,11 +83,10 @@ class UserTest extends TestCase
         //Log::info($this->getObjectContent($response->getContent()));
 
         $this->assertEquals(200, $response->status());
-
     }
 
-    public function testUpdateFunction() {
-
+    public function testUpdateFunction()
+    {
         $faker = Faker\Factory::create();
 
         $file = UploadedFile::fake()->image('avatar.jpg');
@@ -107,11 +107,10 @@ class UserTest extends TestCase
         //Log::info($this->getObjectContent($response->getContent()));
 
         $this->assertEquals(200, $response->status());
-
     }
 
-    public function testDeleteFunction() {
-
+    public function testDeleteFunction()
+    {
         $user = User::all()->shuffle()->first();
         $id = $user->id;
 

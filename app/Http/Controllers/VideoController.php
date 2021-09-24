@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Http\Controllers;
 
@@ -13,47 +13,46 @@ use App\Services\DropBoxService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 
-class VideoController extends Controller {
-
+class VideoController extends Controller
+{
     public $dropBoxService;
 
-    public function __construct(DropBoxService $dropBoxService) {
+    public function __construct(DropBoxService $dropBoxService)
+    {
         $this->dropBoxService = $dropBoxService;
     }
 
-    public function all() {
-
+    public function all()
+    {
         $videos = Video::all();
 
         return response()->json($videos);
     }
 
-    public function get($id) {
-
+    public function get($id)
+    {
         $video = Video::find($id);
 
         return response()->json($video);
     }
 
-    public function store(Request $request) {
-
+    public function store(Request $request)
+    {
         $video = new Video();
         $video->title = $request->title;
         $video->description = $request->description;
         $video->thumbnail = $request->thumbnail;
         $video->user_id = $request->user_id;
 
-        if($request->exists('video')) {
-
+        if ($request->exists('video')) {
             $thumbnailPath = $this->storeThumbnail($request->video->path());
 
             $dropBoxPath = '/video/'.$request->video->getClientOriginalName();
 
-            $this->dropBoxService->uploadFile($request->video->path(),$dropBoxPath);
+            $this->dropBoxService->uploadFile($request->video->path(), $dropBoxPath);
 
             $video->video = $dropBoxPath;
             $video->thumbnail = $thumbnailPath;
-
         }
 
         $video->save();
@@ -61,8 +60,8 @@ class VideoController extends Controller {
         return response()->json($video);
     }
 
-    public function update(Request $request, $id) {
-
+    public function update(Request $request, $id)
+    {
         $video = Video::find($id);
         $video->title = $request->title;
         $video->description = $request->description;
@@ -71,14 +70,14 @@ class VideoController extends Controller {
 
         //if($request->exists('video')) {
 
-            //$thumbnailPath = $this->storeThumbnail($request->video->path());
+        //$thumbnailPath = $this->storeThumbnail($request->video->path());
 
-            //$dropBoxPath = '/video/'.$request->video->getClientOriginalName();
+        //$dropBoxPath = '/video/'.$request->video->getClientOriginalName();
 
-            //$this->dropBoxService->uploadFile($request->video->path(),$dropBoxPath);
+        //$this->dropBoxService->uploadFile($request->video->path(),$dropBoxPath);
 
-            //$video->video = $dropBoxPath;
-            //$video->thumbnail = $thumbnailPath;
+        //$video->video = $dropBoxPath;
+        //$video->thumbnail = $thumbnailPath;
 
         //}
 
@@ -89,8 +88,8 @@ class VideoController extends Controller {
         return response()->json($video);
     }
 
-    public function delete($id) {
-
+    public function delete($id)
+    {
         $video = Video::find($id);
 
         LikeVideo::where('video_id', $video->id)
@@ -99,7 +98,6 @@ class VideoController extends Controller {
         $comments = Comment::where('video_id', $video->id)->get();
 
         foreach ($comments as $comment) {
-
             LikeComment::where('comment_id', $comment->id)
             ->delete();
 
@@ -111,8 +109,8 @@ class VideoController extends Controller {
         return;
     }
 
-    public function storeThumbnail($videoPath) {
-
+    public function storeThumbnail($videoPath)
+    {
         $sec = 10;
         $name = 'thumbnail.png';
         $thumbnailPath = storage_path($name);
@@ -124,10 +122,8 @@ class VideoController extends Controller {
 
         $dropBoxPath = '/thumbnail/' . $name;
 
-        $this->dropBoxService->uploadFile($thumbnailPath,$dropBoxPath);
+        $this->dropBoxService->uploadFile($thumbnailPath, $dropBoxPath);
 
         return $dropBoxPath;
-
     }
-
 }

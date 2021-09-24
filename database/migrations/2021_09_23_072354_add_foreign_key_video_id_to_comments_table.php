@@ -14,7 +14,6 @@ class AddForeignKeyVideoIdToCommentsTable extends Migration
     public function up()
     {
         Schema::table('comments', function (Blueprint $table) {
-
             $localTableName = 'comments';
             $localColumnName = 'video_id';
             $foreignTableName = 'videos';
