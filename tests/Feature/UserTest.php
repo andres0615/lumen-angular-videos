@@ -9,24 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class UserTest extends TestCase
 {
-
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->get('/');
-
-        $this->assertEquals(
-            $this->app->version(),
-            $this->response->getContent()
-        );
-
-        //$this->json()->seeJson();
-    }
-
     public function testUserFactory()
     {
         $user = factory(User::class)->create();

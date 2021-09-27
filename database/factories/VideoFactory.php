@@ -25,7 +25,7 @@ $factory->define(App\Video::class, function (
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'video' => '/video/test.mp4',
-        'thumbnail' => '/video/test.jpg',
+        'thumbnail' => '/thumbnail/thumbnail.png',
         'user_id' => $user->id
     ];
 });

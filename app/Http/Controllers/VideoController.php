@@ -24,9 +24,25 @@ class VideoController extends Controller
 
     public function all()
     {
-        $videos = Video::all();
+        $videos = Video::take(10)->get();
 
-        return response()->json($videos);
+        $data = [];
+
+        foreach ($videos as $video) {
+            $record = $video->toArray();
+
+            //$videoUrl = $this->dropBoxService->getFileLink($video->video);
+
+            //$record['video'] = $videoUrl;
+
+            $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+
+            $record['thumbnail'] = $videoThumbnail;
+
+            $data[] = $record;
+        }
+
+        return response()->json($data);
     }
 
     public function get($id)
@@ -65,21 +81,6 @@ class VideoController extends Controller
         $video = Video::find($id);
         $video->title = $request->title;
         $video->description = $request->description;
-        //$video->thumbnail = $request->thumbnail;
-        //$video->user_id = $request->user_id;
-
-        //if($request->exists('video')) {
-
-        //$thumbnailPath = $this->storeThumbnail($request->video->path());
-
-        //$dropBoxPath = '/video/'.$request->video->getClientOriginalName();
-
-        //$this->dropBoxService->uploadFile($request->video->path(),$dropBoxPath);
-
-        //$video->video = $dropBoxPath;
-        //$video->thumbnail = $thumbnailPath;
-
-        //}
 
         $video->touch();
 
