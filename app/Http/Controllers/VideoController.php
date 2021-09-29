@@ -24,7 +24,8 @@ class VideoController extends Controller
 
     public function all()
     {
-        $videos = Video::take(10)->get();
+        //$videos = Video::take(10)->get();
+        $videos = Video::all()->shuffle()->take(10);
 
         $data = [];
 
@@ -49,7 +50,13 @@ class VideoController extends Controller
     {
         $video = Video::find($id);
 
-        return response()->json($video);
+        $data = $video->toArray();
+
+        $videoUrl = $this->dropBoxService->getFileLink($video->video);
+
+        $data['video'] = $videoUrl;
+
+        return response()->json($data);
     }
 
     public function store(Request $request)
