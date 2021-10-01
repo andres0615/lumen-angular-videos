@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Services\DropBoxService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
+use DB;
 
 class VideoController extends Controller
 {
@@ -27,10 +28,27 @@ class VideoController extends Controller
         //$videos = Video::take(10)->get();
         $videos = Video::all()->shuffle()->take(10);
 
+        $videos = DB::table('videos')
+                    ->leftJoin('users', 'videos.user_id', '=', 'users.id')
+                    ->select('videos.id',
+                            'videos.title',
+                            'videos.description',
+                            'videos.video',
+                            'videos.thumbnail',
+                            'videos.user_id',
+                            'videos.created_at',
+                            'videos.updated_at',
+                            'users.username as username')
+                     /*->where('status', '<>', 1)
+                     ->groupBy('status')*/
+                     ->limit(10)
+                     ->get()
+                     ->shuffle();
+
         $data = [];
 
         foreach ($videos as $video) {
-            $record = $video->toArray();
+            $record = $video;
 
             //$videoUrl = $this->dropBoxService->getFileLink($video->video);
 
@@ -38,7 +56,7 @@ class VideoController extends Controller
 
             $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
 
-            $record['thumbnail'] = $videoThumbnail;
+            $record->thumbnail = $videoThumbnail;
 
             $data[] = $record;
         }
