@@ -9,7 +9,7 @@ Plataforma de videos parecida a youtube, backend desarrollado con [lumen](https:
 
 #### Ver aplicacion en: 
 
-[http://lumen-angular-videos.herokuapp.com/](http://lumen-angular-videos.herokuapp.com/)
+[https://lumen-angular-videos.herokuapp.com/](https://lumen-angular-videos.herokuapp.com/)
 
 #### Repositorio del frontend:
 [https://github.com/andres0615/f-lumen-angular-videos](https://github.com/andres0615/f-lumen-angular-videos)
