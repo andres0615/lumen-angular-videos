@@ -12,10 +12,10 @@ use App\Services\DropBoxService;
 
 class CommentController extends Controller
 {
-
     public $dropBoxService;
 
-    public function __construct(DropBoxService $dropBoxService) {
+    public function __construct(DropBoxService $dropBoxService)
+    {
         $this->dropBoxService = $dropBoxService;
     }
 
@@ -85,7 +85,7 @@ class CommentController extends Controller
 
         $data = [];
 
-        foreach($comments as $comment) {
+        foreach ($comments as $comment) {
             $record = $comment;
             $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
 
