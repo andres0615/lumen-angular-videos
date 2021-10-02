@@ -7,7 +7,7 @@ Plataforma de videos parecida a youtube, backend desarrollado con [lumen](https:
 - [Lumen](https://lumen.laravel.com/) 5.5, el microframework basado en laravel.
 - Testing.
 
-#### Ver aplicaion en: 
+#### Ver aplicacion en: 
 
 [http://lumen-angular-videos.herokuapp.com/](http://lumen-angular-videos.herokuapp.com/)
 
