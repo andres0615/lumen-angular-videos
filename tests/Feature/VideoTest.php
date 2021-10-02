@@ -48,6 +48,8 @@ class VideoTest extends TestCase
                 'description',
                 'video',
                 'thumbnail',
+                'username',
+                'user_photo',
                 'user_id',
                 'created_at',
                 'updated_at'

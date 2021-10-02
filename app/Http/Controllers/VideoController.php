@@ -68,13 +68,22 @@ class VideoController extends Controller
 
     public function get($id)
     {
-        $video = Video::find($id);
+        $video = Video::where('videos.id',$id)
+                    ->leftJoin('users', 'user_id', 'users.id')
+                    ->select('videos.*',
+                            'users.username',
+                            'users.photo as user_photo')
+                    ->first();
 
         $data = $video->toArray();
 
         $videoUrl = $this->dropBoxService->getFileLink($video->video);
 
         $data['video'] = $videoUrl;
+
+        $userPhoto = $this->dropBoxService->getFileLink($video->user_photo);
+
+        $data['user_photo'] = $userPhoto;
 
         return response()->json($data);
     }
