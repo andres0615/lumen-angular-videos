@@ -101,7 +101,7 @@ class CommentTest extends TestCase
         /* Se obtiene el id de algun video que tenga al menos un comentario. */
 
         $id = Comment::all()->shuffle()->first()->video_id;
-        $url = '/video-comments/' . $id;
+        $url = '/comment/video/' . $id;
 
         $this->json('GET', $url)
         ->seeJsonStructure([
