@@ -8,9 +8,17 @@ use App\LikeComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DB;
+use App\Services\DropBoxService;
 
 class CommentController extends Controller
 {
+
+    public $dropBoxService;
+
+    public function __construct(DropBoxService $dropBoxService) {
+        $this->dropBoxService = $dropBoxService;
+    }
+
     public function all()
     {
         $comments = Comment::all();
@@ -74,6 +82,15 @@ class CommentController extends Controller
             ->select('comments.*', 'users.username', 'users.photo as user_photo')
             ->where('video_id', $id)
             ->get();
+
+        $data = [];
+
+        foreach($comments as $comment) {
+            $record = $comment;
+            $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
+
+            $data = $record;
+        }
 
         return response()->json($comments);
     }
