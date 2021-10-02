@@ -111,6 +111,7 @@ class CommentTest extends TestCase
                 'user_id',
                 'video_id',
                 'username',
+                'user_photo',
                 'created_at',
                 'updated_at'
             ]

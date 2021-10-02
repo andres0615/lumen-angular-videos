@@ -71,7 +71,7 @@ class CommentController extends Controller
     {
         $comments = DB::table('comments')
             ->leftJoin('users', 'comments.user_id', 'users.id')
-            ->select('comments.*', 'users.username')
+            ->select('comments.*', 'users.username', 'users.photo as user_photo')
             ->where('video_id', $id)
             ->get();
 
