@@ -109,13 +109,4 @@ class VideoTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
-
-    public function getObjectContent($object)
-    {
-        ob_start();
-        var_dump($object);
-        $contents = ob_get_contents();
-        ob_end_clean();
-        return $contents;
-    }
 }

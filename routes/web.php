@@ -55,6 +55,7 @@ $router->get('comment/{id}', 'CommentController@get');
 $router->post('comment', 'CommentController@store');
 $router->put('comment/{id}', 'CommentController@update');
 $router->delete('comment/{id}', 'CommentController@delete');
+$router->get('video-comments/{id}', 'CommentController@getCommentsByVideoId');
 
 /**
  * Routes for resource like-comment

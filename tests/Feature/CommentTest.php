@@ -94,4 +94,26 @@ class CommentTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
+
+    public function testGetCommentsByVideoId()
+    {
+
+        /* Se obtiene el id de algun video que tenga al menos un comentario. */
+
+        $id = Comment::all()->shuffle()->first()->video_id;
+        $url = '/video-comments/' . $id;
+
+        $this->json('GET', $url)
+        ->seeJsonStructure([
+            [
+                'id',
+                'comment',
+                'user_id',
+                'video_id',
+                'username',
+                'created_at',
+                'updated_at'
+            ]
+        ]);
+    }
 }

@@ -30,15 +30,17 @@ class VideoController extends Controller
 
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
-                    ->select('videos.id',
-                            'videos.title',
-                            'videos.description',
-                            'videos.video',
-                            'videos.thumbnail',
-                            'videos.user_id',
-                            'videos.created_at',
-                            'videos.updated_at',
-                            'users.username as username')
+                    ->select(
+                        'videos.id',
+                        'videos.title',
+                        'videos.description',
+                        'videos.video',
+                        'videos.thumbnail',
+                        'videos.user_id',
+                        'videos.created_at',
+                        'videos.updated_at',
+                        'users.username as username'
+                    )
                      /*->where('status', '<>', 1)
                      ->groupBy('status')*/
                      ->limit(10)

@@ -7,6 +7,7 @@ use App\Comment;
 use App\LikeComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use DB;
 
 class CommentController extends Controller
 {
@@ -58,5 +59,22 @@ class CommentController extends Controller
         $comment->delete();
 
         return;
+    }
+
+    /**
+     * Obtener los comentarios de un video.
+     *
+     * @param integer $id id del video.
+     */
+
+    public function getCommentsByVideoId($id)
+    {
+        $comments = DB::table('comments')
+            ->leftJoin('users', 'comments.user_id', 'users.id')
+            ->select('comments.*', 'users.username')
+            ->where('video_id', $id)
+            ->get();
+
+        return response()->json($comments);
     }
 }
