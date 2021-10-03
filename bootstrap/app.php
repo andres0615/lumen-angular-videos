@@ -64,9 +64,11 @@ $app->middleware([
    Vluzrmos\LumenCors\CorsMiddleware::class
 ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class,
+     'jwt.auth' => \Tymon\JWTAuth\Middleware\GetUserFromToken::class,
+     'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class,
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +100,11 @@ $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
+    require __DIR__.'/../routes/api.php';
 });
+
+$app->configure('auth');
+
+//dd(config('auth.defaults'));
 
 return $app;

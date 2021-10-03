@@ -10,6 +10,7 @@ use App\LikeVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\DropBoxService;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -36,7 +37,7 @@ class UserController extends Controller
     {
         $user = new User();
         $user->username = $request->username;
-        $user->password = $request->password;
+        $user->password = Hash::make($request->password);
 
         if ($request->exists('photo')) {
             $dropBoxPath = '/'.$request->photo->getClientOriginalName();

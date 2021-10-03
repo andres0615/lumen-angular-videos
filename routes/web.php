@@ -70,3 +70,4 @@ $router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@dele
 $router->get('like-video/{userId}/{videoId}', 'LikeVideoController@get');
 $router->post('like-video', 'LikeVideoController@store');
 $router->delete('like-video/{userId}/{videoId}', 'LikeVideoController@delete');
+

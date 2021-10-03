@@ -11,10 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Hash;
+
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->userName,
-        'password' => $faker->password,
+        'password' => Hash::make($faker->password),
         'photo' => '/user/default_user.png',
     ];
 });

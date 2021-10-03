@@ -60,6 +60,12 @@ class UserTest extends TestCase
             'photo' => $file
         ];
 
+        /*$payload = [
+            'username' => 'admin',
+            'password' => 'admin',
+            'photo' => $file
+        ];*/
+
         $response = $this->call('POST', '/user', $payload);
 
         //Log::info($this->getObjectContent($response->getContent()));
