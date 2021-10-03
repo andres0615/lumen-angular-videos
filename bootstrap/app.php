@@ -105,6 +105,4 @@ $app->router->group([
 
 $app->configure('auth');
 
-//dd(config('auth.defaults'));
-
 return $app;

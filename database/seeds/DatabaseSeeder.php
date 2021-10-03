@@ -23,5 +23,6 @@ class DatabaseSeeder extends Seeder
         factory(LikeComment::class, 5)->create();
 
         $this->call('CommentsTableSeeder');
+        $this->call('UsersTableSeeder');
     }
 }
