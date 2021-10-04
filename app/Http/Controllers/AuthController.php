@@ -26,14 +26,17 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $credentials = ['username' => $request->username, 
-                        'password' => $request->password];
+
+        $credentials = [
+                        'username' => $request->username, 
+                        'password' => $request->password
+                        ];
 
         if (! $token = Auth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
-        Log::info($token);
+        //Log::info($token);
 
         return $this->respondWithToken($token);
     }
