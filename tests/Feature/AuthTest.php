@@ -9,7 +9,6 @@ class VideoTest extends TestCase
 {
     public function testLoginFunction()
     {
-
         $payload = [
             'username' => 'admin',
             'password' => 'admin'
@@ -17,16 +16,52 @@ class VideoTest extends TestCase
 
         $response = $this->call('POST', '/auth/login', $payload);
 
-        //Log::info($this->getObjectContent($response->getContent()));
+        $this->assertEquals(200, $response->status());
+    }
+
+    public function testMeFunction()
+    {
+        $payload = [
+            'username' => 'admin',
+            'password' => 'admin'
+        ];
+
+        $response = $this->call('POST', '/auth/login', $payload);
+
+        $token = json_decode($response->getContent())->access_token;
+
+        $response = $this->call(
+            'POST',
+            '/auth/me',
+            [],
+            [],
+            [],
+            ['HTTP_Authorization' => 'Bearer ' . $token]
+        );
 
         $this->assertEquals(200, $response->status());
     }
 
-    public function getObjectContent($object) {
-        ob_start();
-        var_dump($object);
-        $contents = ob_get_contents();
-        ob_end_clean();
-        return $contents;
+    public function testLogoutFunction()
+    {
+        $payload = [
+            'username' => 'admin',
+            'password' => 'admin'
+        ];
+
+        $response = $this->call('POST', '/auth/login', $payload);
+
+        $token = json_decode($response->getContent())->access_token;
+
+        $response = $this->call(
+            'POST',
+            '/auth/logout',
+            [],
+            [],
+            [],
+            ['HTTP_Authorization' => 'Bearer ' . $token]
+        );
+
+        $this->assertEquals(200, $response->status());
     }
 }

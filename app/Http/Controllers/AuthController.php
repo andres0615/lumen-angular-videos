@@ -16,7 +16,6 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        
     }
 
     /**
@@ -26,17 +25,14 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-
         $credentials = [
-                        'username' => $request->username, 
+                        'username' => $request->username,
                         'password' => $request->password
                         ];
 
         if (! $token = Auth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
-        //Log::info($token);
 
         return $this->respondWithToken($token);
     }
@@ -46,7 +42,7 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function me(Request $request)
     {
         return response()->json(Auth::user());
     }

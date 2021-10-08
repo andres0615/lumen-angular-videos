@@ -13,13 +13,12 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-    	// Se crea usuario admin.
+        // Se crea usuario admin.
 
         $user = new User;
-    	$user->username = 'admin';
-    	$user->password = Hash::make('admin');
-    	$user->photo = '/user/default_user.png';
-    	$user->save();
-
+        $user->username = 'admin';
+        $user->password = Hash::make('admin');
+        $user->photo = '/user/default_user.png';
+        $user->save();
     }
 }
