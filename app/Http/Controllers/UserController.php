@@ -30,7 +30,13 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return response()->json($user);
+        $data = $user->toArray();
+
+        $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+
+        $data['photo'] = $photoUrl;
+
+        return response()->json($data);
     }
 
     public function store(Request $request)

@@ -12,5 +12,3 @@ $router->group([
 });
 
 $router->post('auth/login', 'AuthController@login');
-
-//$router->post('auth/me', 'AuthController@me');
