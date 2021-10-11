@@ -42,6 +42,7 @@ $router->delete('user/{id}', 'UserController@delete');
  * Routes for resource video
  */
 $router->get('video', 'VideoController@all');
+$router->get('video/user/{userId}', 'VideoController@getVideosByUserId');
 $router->get('video/{id}', 'VideoController@get');
 $router->post('video', 'VideoController@store');
 $router->put('video/{id}', 'VideoController@update');

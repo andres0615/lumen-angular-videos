@@ -25,8 +25,6 @@ class VideoController extends Controller
 
     public function all()
     {
-        //$videos = Video::take(10)->get();
-        $videos = Video::all()->shuffle()->take(10);
 
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
@@ -164,5 +162,59 @@ class VideoController extends Controller
         $this->dropBoxService->uploadFile($thumbnailPath, $dropBoxPath);
 
         return $dropBoxPath;
+    }
+
+    public function getVideosByUserId($userId)
+    {
+
+        $videos = DB::table('videos')
+                    ->leftJoin('users', 'videos.user_id', '=', 'users.id')
+                    ->select(
+                        'videos.id',
+                        'videos.title',
+                        'videos.description',
+                        'videos.video',
+                        'videos.thumbnail',
+                        'videos.user_id',
+                        'videos.created_at',
+                        'videos.updated_at',
+                        'users.username as username'
+                    )
+                     ->where('videos.user_id', $userId)
+                     /*->groupBy('status')*/
+                     ->limit(10)
+                     ->get()
+                     ->shuffle();
+
+        $data = [];
+
+        foreach ($videos as $video) {
+            $record = $video;
+
+            //$videoUrl = $this->dropBoxService->getFileLink($video->video);
+
+            //$record['video'] = $videoUrl;
+
+            $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+
+            $record->thumbnail = $videoThumbnail;
+
+            $data[] = $record;
+        }
+
+        $this->logObject($data, '-------video controller $data --------');
+
+        return response()->json($data);
+    }
+
+    public function logObject($object, $msg = null) {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
     }
 }

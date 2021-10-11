@@ -111,4 +111,38 @@ class VideoTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
+
+    public function testGetVideosByUserId()
+    {
+
+        $userId = Video::all()->shuffle()->first()->user_id;
+
+        //$this->logObject($userId);
+
+        $this->json('GET', '/video/user/' . $userId)
+        ->seeJsonStructure([
+            [
+                'id',
+                'title',
+                'description',
+                'video',
+                'thumbnail',
+                'user_id',
+                'created_at',
+                'updated_at',
+                'username'
+            ]
+        ]);
+    }
+
+    public function logObject($object, $msg = null) {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
+    }
 }
