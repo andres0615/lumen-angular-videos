@@ -35,7 +35,7 @@ $router->get('/', function () use ($router) {
 $router->get('user', 'UserController@all');
 $router->get('user/{id}', 'UserController@get');
 $router->post('user', 'UserController@store');
-$router->put('user/{id}', 'UserController@update');
+$router->post('user/{id}', 'UserController@update');
 $router->delete('user/{id}', 'UserController@delete');
 
 /**

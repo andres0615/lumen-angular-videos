@@ -58,11 +58,19 @@ class UserController extends Controller
         return response()->json($user);
     }
 
-    public function update(Request $request, DropBoxService $dropBoxService, $id)
+    public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $user->username = $request->username;
-        $user->password = $request->password;
+
+        $this->logObject($request->username,'------aqui------');
+
+        if ($request->exists('username')) {
+            $user->username = $request->username;
+        }
+
+        if ($request->exists('password')) {
+            $user->password = $request->password;
+        }
 
         if ($request->exists('photo')) {
             $dropBoxPath = '/'.$request->photo->getClientOriginalName();
@@ -76,7 +84,13 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json($user);
+        $data = $user->toArray();
+
+        $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+
+        $data['photo'] = $photoUrl;
+
+        return response()->json($data);
     }
 
     public function delete($id)
@@ -112,11 +126,14 @@ class UserController extends Controller
         return;
     }
 
-    //public function getObjectContent($object) {
-        //ob_start();
-        //var_dump($object);
-        //$contents = ob_get_contents();
-        //ob_end_clean();
-        //return $contents;
-    //}
+    public function logObject($object, $msg = null) {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
+    }
 }

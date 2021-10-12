@@ -181,7 +181,6 @@ class VideoController extends Controller
                         'users.username as username'
                     )
                      ->where('videos.user_id', $userId)
-                     /*->groupBy('status')*/
                      ->limit(10)
                      ->get()
                      ->shuffle();
