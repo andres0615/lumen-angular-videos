@@ -37,4 +37,38 @@ class LikeVideoController extends Controller
 
         return;
     }
+
+    public function getVideoLikes($videoId)
+    {
+        $videoLikes = LikeVideo::where('video_id', $videoId)
+                        ->where('type', true)
+                        ->count();
+
+        $data = ['likes' => $videoLikes];
+
+        return response()->json($data);
+    }
+
+    public function getVideoDislikes($videoId)
+    {
+        $videoDislikes = LikeVideo::where('video_id', $videoId)
+                        ->where('type', false)
+                        ->count();
+
+        $data = ['dislikes' => $videoDislikes];
+
+        return response()->json($data);
+    }
+
+    public function logObject($object, $msg = null)
+    {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
+    }
 }

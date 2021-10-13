@@ -62,7 +62,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $this->logObject($request->username,'------aqui------');
+        $this->logObject($request->all(), '------aqui------');
 
         if ($request->exists('username')) {
             $user->username = $request->username;
@@ -75,7 +75,7 @@ class UserController extends Controller
         if ($request->exists('photo')) {
             $dropBoxPath = '/'.$request->photo->getClientOriginalName();
 
-            $dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
+            $this->dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
 
             $user->photo = $dropBoxPath;
         }
@@ -126,7 +126,8 @@ class UserController extends Controller
         return;
     }
 
-    public function logObject($object, $msg = null) {
+    public function logObject($object, $msg = null)
+    {
         Log::info($msg);
 
         ob_start();

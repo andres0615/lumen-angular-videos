@@ -82,7 +82,7 @@ class UserTest extends TestCase
 
         Log::info('/user/' . $id);
 
-        $response = $this->call('put', '/user/' . $id, $payload);
+        $response = $this->call('post', '/user/' . $id, $payload);
 
         //Log::info($this->getObjectContent($response->getContent()));
 

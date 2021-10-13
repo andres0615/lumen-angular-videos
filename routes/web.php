@@ -68,6 +68,21 @@ $router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@dele
 /**
  * Routes for resource like-video
  */
-$router->get('like-video/{userId}/{videoId}', 'LikeVideoController@get');
+/*$router->get('like-video/{userId}/{videoId}', 'LikeVideoController@get');
 $router->post('like-video', 'LikeVideoController@store');
 $router->delete('like-video/{userId}/{videoId}', 'LikeVideoController@delete');
+$router->get('like-video/total-likes/{videoId}', 'LikeVideoController@getVideoLikes');
+$router->get('like-video/total-dislikes/{videoId}', 'LikeVideoController@getVideoDislikes');*/
+
+
+$router->group([
+
+    'prefix' => 'like-video'
+
+], function ($router) {
+    $router->get('{userId}/{videoId}', 'LikeVideoController@get');
+    $router->post('/', 'LikeVideoController@store');
+    $router->delete('{userId}/{videoId}', 'LikeVideoController@delete');
+    $router->get('likes/total/{videoId}', 'LikeVideoController@getVideoLikes');
+    $router->get('dislikes/total/{videoId}', 'LikeVideoController@getVideoDislikes');
+});

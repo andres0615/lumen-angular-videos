@@ -64,4 +64,46 @@ class LikeVideoTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
+
+    public function testGetVideoLikes()
+    {
+        $likeVideo = LikeVideo::where('type', true)
+                    ->get()
+                    ->shuffle()
+                    ->first();
+
+        $url = '/like-video/likes/total/' . $likeVideo->video_id;
+
+        $this->json('GET', $url)
+        ->seeJsonStructure([
+                'likes'
+            ]);
+    }
+
+    public function testGetVideoDislikes()
+    {
+        $dislikeVideo = LikeVideo::where('type', false)
+                        ->get()
+                        ->shuffle()
+                        ->first();
+
+        $url = '/like-video/dislikes/total/' . $dislikeVideo->video_id;
+
+        $this->json('GET', $url)
+        ->seeJsonStructure([
+                'dislikes'
+            ]);
+    }
+
+    public function logObject($object, $msg = null)
+    {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
+    }
 }

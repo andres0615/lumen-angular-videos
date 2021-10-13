@@ -114,7 +114,6 @@ class VideoTest extends TestCase
 
     public function testGetVideosByUserId()
     {
-
         $userId = Video::all()->shuffle()->first()->user_id;
 
         //$this->logObject($userId);
@@ -135,7 +134,8 @@ class VideoTest extends TestCase
         ]);
     }
 
-    public function logObject($object, $msg = null) {
+    public function logObject($object, $msg = null)
+    {
         Log::info($msg);
 
         ob_start();

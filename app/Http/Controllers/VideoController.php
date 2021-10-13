@@ -25,7 +25,6 @@ class VideoController extends Controller
 
     public function all()
     {
-
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
                     ->select(
@@ -166,7 +165,6 @@ class VideoController extends Controller
 
     public function getVideosByUserId($userId)
     {
-
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
                     ->select(
@@ -206,7 +204,8 @@ class VideoController extends Controller
         return response()->json($data);
     }
 
-    public function logObject($object, $msg = null) {
+    public function logObject($object, $msg = null)
+    {
         Log::info($msg);
 
         ob_start();
