@@ -14,6 +14,10 @@ class LikeVideoController extends Controller
                         ->where('video_id', $videoId)
                         ->first();
 
+        if (!empty($likeVideo)) {
+            $likeVideo->type = (bool)$likeVideo->type;
+        }
+
         return response()->json($likeVideo);
     }
 
