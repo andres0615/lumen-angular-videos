@@ -65,4 +65,34 @@ class LikeCommentTest extends TestCase
 
         $this->assertEquals(200, $response->status());
     }
+
+    public function testGetCommentLikes()
+    {
+        $likeComment = LikeComment::where('type', true)
+                    ->get()
+                    ->shuffle()
+                    ->first();
+
+        $url = '/like-comment/likes/total/' . $likeComment->comment_id;
+
+        $this->json('GET', $url)
+        ->seeJsonStructure([
+                'likes'
+            ]);
+    }
+
+    public function testGetCommentDislikes()
+    {
+        $dislikeComment = LikeComment::where('type', false)
+                        ->get()
+                        ->shuffle()
+                        ->first();
+
+        $url = '/like-comment/dislikes/total/' . $dislikeComment->comment_id;
+
+        $this->json('GET', $url)
+        ->seeJsonStructure([
+                'dislikes'
+            ]);
+    }
 }

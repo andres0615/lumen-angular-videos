@@ -61,19 +61,25 @@ $router->get('comment/video/{id}', 'CommentController@getCommentsByVideoId');
 /**
  * Routes for resource like-comment
  */
-$router->get('like-comment/{userId}/{commentId}', 'LikeCommentController@get');
+/*$router->get('like-comment/{userId}/{commentId}', 'LikeCommentController@get');
 $router->post('like-comment', 'LikeCommentController@store');
-$router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@delete');
+$router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@delete');*/
+
+$router->group([
+
+    'prefix' => 'like-comment'
+
+], function ($router) {
+    $router->get('{userId}/{commentId}', 'LikeCommentController@get');
+    $router->post('/', 'LikeCommentController@store');
+    $router->delete('{userId}/{commentId}', 'LikeCommentController@delete');
+    $router->get('likes/total/{commentId}', 'LikeCommentController@getCommentLikes');
+    $router->get('dislikes/total/{commentId}', 'LikeCommentController@getCommentDislikes');
+});
 
 /**
  * Routes for resource like-video
  */
-/*$router->get('like-video/{userId}/{videoId}', 'LikeVideoController@get');
-$router->post('like-video', 'LikeVideoController@store');
-$router->delete('like-video/{userId}/{videoId}', 'LikeVideoController@delete');
-$router->get('like-video/total-likes/{videoId}', 'LikeVideoController@getVideoLikes');
-$router->get('like-video/total-dislikes/{videoId}', 'LikeVideoController@getVideoDislikes');*/
-
 
 $router->group([
 
