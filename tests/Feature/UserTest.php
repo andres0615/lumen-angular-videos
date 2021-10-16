@@ -67,6 +67,20 @@ class UserTest extends TestCase
 
     public function testUpdateFunction()
     {
+
+        //Se obtiene el token jwt
+
+        $payload = [
+            'username' => 'admin',
+            'password' => 'admin'
+        ];
+
+        $response = $this->call('POST', '/auth/login', $payload);
+
+        $token = json_decode($response->getContent())->access_token;
+
+        //Se realiza el el resto del test
+
         $faker = Faker\Factory::create();
 
         $file = UploadedFile::fake()->image('avatar.jpg');
@@ -78,13 +92,21 @@ class UserTest extends TestCase
         ];
 
         $user = User::all()->shuffle()->first();
+
         $id = $user->id;
 
-        Log::info('/user/' . $id);
+        $url = '/user/' . $id;
 
-        $response = $this->call('post', '/user/' . $id, $payload);
+        //Se usa el token jwt
 
-        //Log::info($this->getObjectContent($response->getContent()));
+        $response = $this->call(
+            'POST',
+            $url,
+            $payload,
+            [],
+            [],
+            ['HTTP_Authorization' => 'Bearer ' . $token]
+        );
 
         $this->assertEquals(200, $response->status());
     }
@@ -103,11 +125,15 @@ class UserTest extends TestCase
         $this->assertEquals(200, $response->status());
     }
 
-    //public function getObjectContent($object) {
-        //ob_start();
-        //var_dump($object);
-        //$contents = ob_get_contents();
-        //ob_end_clean();
-        //return $contents;
-    //}
+    public function logObject($object, $msg = null)
+    {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
+    }
 }

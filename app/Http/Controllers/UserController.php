@@ -90,6 +90,8 @@ class UserController extends Controller
 
         $data['photo'] = $photoUrl;
 
+        $this->logObject($data, '------- update user --------');
+
         return response()->json($data);
     }
 

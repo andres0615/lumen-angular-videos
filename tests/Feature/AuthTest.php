@@ -5,7 +5,7 @@ use Laravel\Lumen\Testing\DatabaseTransactions;
 use App\User;
 use Illuminate\Support\Facades\Log;
 
-class VideoTest extends TestCase
+class AuthTest extends TestCase
 {
     public function testLoginFunction()
     {

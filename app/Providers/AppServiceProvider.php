@@ -19,9 +19,8 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register('Thedevsaddam\LumenRouteList\LumenRouteListServiceProvider');
         }
 
-        $this->app->register('Tymon\JWTAuth\Providers\LumenServiceProvider');
+        $this->app->register('\Tymon\JWTAuth\Providers\LumenServiceProvider');
         
-        //$this->app->register('Tymon\JWTAuth\Providers\JWTAuthServiceProvider');
         $this->app->register('App\Services\DropBoxService');
     }
 }

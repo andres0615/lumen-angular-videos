@@ -56,6 +56,8 @@ class CommentTest extends TestCase
         $user = User::all()->shuffle()->first();
         $video = Video::all()->shuffle()->first();
 
+        $this->actingAs($user);
+
         $payload = [
             'comment' => $faker->paragraph,
             'user_id' => $user->id,
@@ -116,5 +118,17 @@ class CommentTest extends TestCase
                 'updated_at'
             ]
         ]);
+    }
+
+    public function logObject($object, $msg)
+    {
+        Log::info($msg);
+
+        ob_start();
+        var_dump($object);
+        $contents = ob_get_contents();
+        ob_end_clean();
+        Log::info($contents);
+        return;
     }
 }

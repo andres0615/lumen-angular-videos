@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use DB;
 use App\Services\DropBoxService;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -42,7 +43,13 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return response()->json($comment);
+        $data = $comment->toArray();
+
+        $userPhoto = $this->dropBoxService->getFileLink(Auth::user()->photo);
+
+        $data['user_photo'] = $userPhoto;
+
+        return response()->json($data);
     }
 
     public function update(Request $request, $id)
@@ -81,6 +88,7 @@ class CommentController extends Controller
             ->leftJoin('users', 'comments.user_id', 'users.id')
             ->select('comments.*', 'users.username', 'users.photo as user_photo')
             ->where('video_id', $id)
+            ->orderBy('updated_at', 'DESC')
             ->get();
 
         $data = [];

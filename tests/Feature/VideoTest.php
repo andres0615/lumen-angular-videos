@@ -134,7 +134,7 @@ class VideoTest extends TestCase
         ]);
     }
 
-    public function logObject($object, $msg = null)
+    /*public function logObject($object, $msg = null)
     {
         Log::info($msg);
 
@@ -144,5 +144,5 @@ class VideoTest extends TestCase
         ob_end_clean();
         Log::info($contents);
         return;
-    }
+    }*/
 }

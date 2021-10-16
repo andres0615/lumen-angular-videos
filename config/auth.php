@@ -7,7 +7,6 @@ return [
         'passwords' => 'users',
     ],
 
-
     'guards' => [
         'api' => [
             'driver' => 'jwt',
