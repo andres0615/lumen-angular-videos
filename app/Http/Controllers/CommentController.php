@@ -48,6 +48,7 @@ class CommentController extends Controller
         $userPhoto = $this->dropBoxService->getFileLink(Auth::user()->photo);
 
         $data['user_photo'] = $userPhoto;
+        $data['username'] = Auth::user()->username;
 
         return response()->json($data);
     }
