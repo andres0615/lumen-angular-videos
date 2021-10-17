@@ -53,7 +53,7 @@ $router->delete('video/{id}', 'VideoController@delete');
  */
 $router->get('comment', 'CommentController@all');
 $router->get('comment/{id}', 'CommentController@get');
-$router->post('comment', 'CommentController@store');
+$router->post('comment', ['middleware' => ['jwt.auth'], 'uses' => 'CommentController@store']);
 $router->put('comment/{id}', 'CommentController@update');
 $router->delete('comment/{id}', 'CommentController@delete');
 $router->get('comment/video/{id}', 'CommentController@getCommentsByVideoId');
