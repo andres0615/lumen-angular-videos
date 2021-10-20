@@ -166,7 +166,10 @@ class VideoController extends Controller
 
         $localPath = storage_path('app/' . $thumbnailName);
 
-        $ffmpeg = FFMpeg::create();
+        $ffmpeg = FFMpeg::create([
+            'ffmpeg.binaries'  => exec('which ffmpeg'),
+            'ffprobe.binaries' => exec('which ffprobe')
+        ]);
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
         $frame->save($localPath);
@@ -266,4 +269,5 @@ class VideoController extends Controller
 
         return $name;
     }
+    
 }
