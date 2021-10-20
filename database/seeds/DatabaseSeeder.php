@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call('CommentsTableSeeder');
         $this->call('UsersTableSeeder');
+        $this->call('VideosTableSeeder');
     }
 }

@@ -17,10 +17,14 @@ use DB;
 class VideoController extends Controller
 {
     public $dropBoxService;
+    public $dbxThumbnailPath;
+    public $dbxVideoPath;
 
     public function __construct(DropBoxService $dropBoxService)
     {
         $this->dropBoxService = $dropBoxService;
+        $this->dbxThumbnailPath = '/thumbnail/';
+        $this->dbxVideoPath = '/video/';
     }
 
     public function all()
@@ -90,15 +94,17 @@ class VideoController extends Controller
     public function store(Request $request)
     {
         $video = new Video();
+
         $video->title = $request->title;
         $video->description = $request->description;
-        $video->thumbnail = $request->thumbnail;
         $video->user_id = $request->user_id;
 
         if ($request->exists('video')) {
             $thumbnailPath = $this->storeThumbnail($request->video->path());
 
-            $dropBoxPath = '/video/'.$request->video->getClientOriginalName();
+            $videoName = $this->getVideoName($request->video->extension());
+
+            $dropBoxPath = $this->dbxVideoPath.$videoName;
 
             $this->dropBoxService->uploadFile($request->video->path(), $dropBoxPath);
 
@@ -121,7 +127,13 @@ class VideoController extends Controller
 
         $video->save();
 
-        return response()->json($video);
+        $data = $video->toArray();
+
+        $videoUrl = $this->dropBoxService->getFileLink($video->video);
+
+        $data['video'] = $videoUrl;
+
+        return response()->json($data);
     }
 
     public function delete($id)
@@ -148,22 +160,25 @@ class VideoController extends Controller
     public function storeThumbnail($videoPath)
     {
         $sec = 10;
-        $name = 'thumbnail.png';
-        $thumbnailPath = storage_path($name);
+
+        $thumbnailName = $this->getThumbnailName();
+        $thumbnailPath = $this->dbxThumbnailPath . $thumbnailName;
+
+        $localPath = storage_path('app/' . $thumbnailName);
 
         $ffmpeg = FFMpeg::create();
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
-        $frame->save($thumbnailPath);
+        $frame->save($localPath);
 
-        $dropBoxPath = '/thumbnail/' . $name;
+        $dropBoxPath = $thumbnailPath;
 
-        $this->dropBoxService->uploadFile($thumbnailPath, $dropBoxPath);
+        $this->dropBoxService->uploadFile($localPath, $dropBoxPath);
 
         return $dropBoxPath;
     }
 
-    public function getVideosByUserId($userId)
+    public function getVideosByUserId($userId, $withVideoUrl = false)
     {
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
@@ -188,9 +203,11 @@ class VideoController extends Controller
         foreach ($videos as $video) {
             $record = $video;
 
-            //$videoUrl = $this->dropBoxService->getFileLink($video->video);
+            if ($withVideoUrl == true) {
+                $videoUrl = $this->dropBoxService->getFileLink($video->video);
 
-            //$record['video'] = $videoUrl;
+                $record->video = $videoUrl;
+            }
 
             $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
 
@@ -199,20 +216,54 @@ class VideoController extends Controller
             $data[] = $record;
         }
 
-        $this->logObject($data, '-------video controller $data --------');
-
         return response()->json($data);
     }
 
-    public function logObject($object, $msg = null)
+    public function getThumbnailName()
     {
-        Log::info($msg);
+        $unique = false;
 
-        ob_start();
-        var_dump($object);
-        $contents = ob_get_contents();
-        ob_end_clean();
-        Log::info($contents);
-        return;
+        $usedPaths = Video::select('thumbnail')
+        ->get()
+        ->pluck('thumbnail')
+        ->toArray();
+
+        $name = null;
+
+        while (!$unique) {
+            $name = str_random(8) . '.png';
+
+            $path = $this->dbxThumbnailPath . $name;
+
+            //Si el path no ha sido usado antes quiere decir que es unico
+
+            $unique = !in_array($path, $usedPaths);
+        }
+
+        return $name;
+    }
+
+    public function getVideoName($ext)
+    {
+        $unique = false;
+
+        $usedPaths = Video::select('video')
+        ->get()
+        ->pluck('video')
+        ->toArray();
+
+        $name = null;
+
+        while (!$unique) {
+            $name = str_random(8) . '.' . $ext;
+
+            $path = $this->dbxVideoPath . $name;
+
+            //Si el path no ha sido usado antes quiere decir que es unico
+
+            $unique = !in_array($path, $usedPaths);
+        }
+
+        return $name;
     }
 }

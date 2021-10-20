@@ -12,7 +12,8 @@
 */
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    //return $router->app->version();
+    phpinfo();
 });
 
 /**
@@ -42,10 +43,10 @@ $router->delete('user/{id}', 'UserController@delete');
  * Routes for resource video
  */
 $router->get('video', 'VideoController@all');
-$router->get('video/user/{userId}', 'VideoController@getVideosByUserId');
+$router->get('video/user/{userId}[/[{withVideoUrl}]]', 'VideoController@getVideosByUserId');
 $router->get('video/{id}', 'VideoController@get');
 $router->post('video', 'VideoController@store');
-$router->put('video/{id}', 'VideoController@update');
+$router->post('video/{id}', 'VideoController@update');
 $router->delete('video/{id}', 'VideoController@delete');
 
 /**
