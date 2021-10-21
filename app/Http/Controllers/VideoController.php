@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use App\Services\DropBoxService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
+use FFMpeg\FFProbe;
 use DB;
 
 class VideoController extends Controller
@@ -159,8 +160,6 @@ class VideoController extends Controller
 
     public function storeThumbnail($videoPath)
     {
-        $sec = 10;
-
         $thumbnailName = $this->getThumbnailName();
         $thumbnailPath = $this->dbxThumbnailPath . $thumbnailName;
 
@@ -170,6 +169,18 @@ class VideoController extends Controller
             'ffmpeg.binaries'  => exec('which ffmpeg'),
             'ffprobe.binaries' => exec('which ffprobe')
         ]);
+
+        $ffprobe = FFProbe::create([
+            'ffmpeg.binaries'  => exec('which ffmpeg'),
+            'ffprobe.binaries' => exec('which ffprobe')
+        ]);
+
+        $videoDuration = $ffprobe
+            ->format($videoPath)
+            ->get('duration');
+
+        $sec = (int)($videoDuration / 2);
+
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
         $frame->save($localPath);
@@ -269,5 +280,4 @@ class VideoController extends Controller
 
         return $name;
     }
-    
 }
