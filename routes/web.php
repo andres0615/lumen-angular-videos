@@ -17,20 +17,6 @@ $router->get('/', function () use ($router) {
 });
 
 /**
- * Routes for resource image-controller
- */
-//$router->get('image', 'ImageControllersController@all');
-//$router->get('image/{id}', 'ImageControllersController@get');
-//$router->post('image', 'ImageControllersController@add');
-//$router->put('image/{id}', 'ImageControllersController@put');
-//$router->delete('image/{id}', 'ImageControllersController@remove');
-
-
-//$router->get('image/test', 'ImageControllersController@test');
-
-
-
-/**
  * Routes for resource user
  */
 $router->get('user', 'UserController@all');
@@ -48,6 +34,7 @@ $router->get('video/{id}', 'VideoController@get');
 $router->post('video', 'VideoController@store');
 $router->post('video/{id}', 'VideoController@update');
 $router->delete('video/{id}', 'VideoController@delete');
+$router->post('video/search', 'VideoController@search');
 
 /**
  * Routes for resource comment
@@ -62,10 +49,6 @@ $router->get('comment/video/{id}', 'CommentController@getCommentsByVideoId');
 /**
  * Routes for resource like-comment
  */
-/*$router->get('like-comment/{userId}/{commentId}', 'LikeCommentController@get');
-$router->post('like-comment', 'LikeCommentController@store');
-$router->delete('like-comment/{userId}/{commentId}', 'LikeCommentController@delete');*/
-
 $router->group([
 
     'prefix' => 'like-comment'

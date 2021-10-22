@@ -134,7 +134,22 @@ class VideoTest extends TestCase
         ]);
     }
 
-    /*public function logObject($object, $msg = null)
+    public function testSearchFunction()
+    {
+        $faker = Faker\Factory::create();
+
+        $video = Video::all()->shuffle()->first();
+
+        $payload = [
+            'keyword' => $video->title,
+        ];
+
+        $response = $this->call('POST', '/video/search', $payload);
+
+        $this->assertEquals(200, $response->status());
+    }
+
+    public function logObject($object, $msg = null)
     {
         Log::info($msg);
 
@@ -144,5 +159,5 @@ class VideoTest extends TestCase
         ob_end_clean();
         Log::info($contents);
         return;
-    }*/
+    }
 }
