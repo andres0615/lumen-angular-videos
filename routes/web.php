@@ -32,9 +32,10 @@ $router->get('video', 'VideoController@all');
 $router->get('video/user/{userId}[/[{withVideoUrl}]]', 'VideoController@getVideosByUserId');
 $router->get('video/{id}', 'VideoController@get');
 $router->post('video', 'VideoController@store');
+$router->post('video/search', 'VideoController@search');
 $router->post('video/{id}', 'VideoController@update');
 $router->delete('video/{id}', 'VideoController@delete');
-$router->post('video/search', 'VideoController@search');
+
 
 /**
  * Routes for resource comment

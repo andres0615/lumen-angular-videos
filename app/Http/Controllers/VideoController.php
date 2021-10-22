@@ -301,8 +301,7 @@ class VideoController extends Controller
                      ->where('title', 'like', $keyword)
                      /*->groupBy('status')*/
                      ->limit(10)
-                     ->get()
-                     ->shuffle();
+                     ->get();
 
         $data = [];
 
