@@ -10,14 +10,19 @@ use Illuminate\Support\Facades\Log;
 use DB;
 use App\Services\DropBoxService;
 use Auth;
+use Error;
+use Exception;
+use App\Services\FileService;
 
 class CommentController extends Controller
 {
     public $dropBoxService;
+    public $fileService;
 
-    public function __construct(DropBoxService $dropBoxService)
+    public function __construct(DropBoxService $dropBoxService, FileService $fileService)
     {
         $this->dropBoxService = $dropBoxService;
+        $this->fileService = $fileService;
     }
 
     public function all()
@@ -85,22 +90,52 @@ class CommentController extends Controller
 
     public function getCommentsByVideoId($id)
     {
-        $comments = DB::table('comments')
-            ->leftJoin('users', 'comments.user_id', 'users.id')
-            ->select('comments.*', 'users.username', 'users.photo as user_photo')
-            ->where('video_id', $id)
-            ->orderBy('updated_at', 'DESC')
-            ->get();
 
-        $data = [];
+        try{
+        
+            $comments = DB::table('comments')
+                ->leftJoin('users', 'comments.user_id', 'users.id')
+                ->select('comments.*', 'users.username', 'users.photo as user_photo')
+                ->where('video_id', $id)
+                ->orderBy('updated_at', 'DESC')
+                ->get();
 
-        foreach ($comments as $comment) {
-            $record = $comment;
-            $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
+            $data = [];
 
-            $data = $record;
+            // echo basename(__FILE__) . ':' . __LINE__ . "\n";
+            Log::info("============= getCommentsByVideoId ===========");
+            Log::info(basename(__FILE__) . ':' . __LINE__);
+            $iteracion = 1;
+
+            foreach ($comments as $comment) {
+                Log::info(basename(__FILE__) . ':' . __LINE__);
+                Log::info($iteracion);
+                $record = $comment;
+                Log::info(basename(__FILE__) . ':' . __LINE__);
+                $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
+                Log::info(basename(__FILE__) . ':' . __LINE__);
+
+                $data = $record;
+                $iteracion++;
+            }
+
+            Log::info("============= End getCommentsByVideoId ===========");
+
+            return response()->json($comments);
+        } catch(Exception $e) {
+            
+            $exceptionData = [
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ];
+            
+            // echo "<pre>";
+            // print_r($exceptionData);
+            // echo "</pre>";
+            throw new Exception($e->getMessage());
+        } catch(Error $e) {
+            throw new Exception($e->getMessage());
         }
-
-        return response()->json($comments);
     }
 }

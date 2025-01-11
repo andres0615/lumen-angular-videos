@@ -77,6 +77,9 @@ class VideoTest extends TestCase
 
         $response = $this->call('POST', '/video', $payload);
 
+        // $responseContent = $response->getContent();
+        // dump($responseContent);
+
         $this->assertEquals(200, $response->status());
     }
 
@@ -159,5 +162,10 @@ class VideoTest extends TestCase
         ob_end_clean();
         Log::info($contents);
         return;
+    }
+
+    public function testPruebaHola()
+    {
+        $this->assertTrue(true);
     }
 }

@@ -10,6 +10,7 @@ use App\LikeVideo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\DropBoxService;
+use App\Services\FileService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFProbe;
@@ -18,12 +19,14 @@ use DB;
 class VideoController extends Controller
 {
     public $dropBoxService;
+    public $fileService;
     public $dbxThumbnailPath;
     public $dbxVideoPath;
 
-    public function __construct(DropBoxService $dropBoxService)
+    public function __construct(DropBoxService $dropBoxService, FileService $fileService)
     {
         $this->dropBoxService = $dropBoxService;
+        $this->fileService = $fileService;
         $this->dbxThumbnailPath = '/thumbnail/';
         $this->dbxVideoPath = '/video/';
     }
@@ -58,7 +61,8 @@ class VideoController extends Controller
 
             //$record['video'] = $videoUrl;
 
-            $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            // $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            $videoThumbnail = $this->fileService->getFileLink($video->thumbnail);
 
             $record->thumbnail = $videoThumbnail;
 
@@ -165,14 +169,30 @@ class VideoController extends Controller
 
         $localPath = storage_path('app/' . $thumbnailName);
 
+        exec('where ffmpeg',$ffmpegCommandOutput);
+        $ffmpegPath = $ffmpegCommandOutput[0];
+
+        exec('where ffprobe',$ffprobeCommandOutput);
+        $ffprobePath = $ffprobeCommandOutput[0];
+
+        // $ffmpeg = FFMpeg::create([
+        //     'ffmpeg.binaries'  => exec('which ffmpeg'),
+        //     'ffprobe.binaries' => exec('which ffprobe')
+        // ]);
+
+        // $ffprobe = FFProbe::create([
+        //     'ffmpeg.binaries'  => exec('which ffmpeg'),
+        //     'ffprobe.binaries' => exec('which ffprobe')
+        // ]);
+
         $ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries'  => exec('which ffmpeg'),
-            'ffprobe.binaries' => exec('which ffprobe')
+            'ffmpeg.binaries'  => $ffmpegPath,
+            'ffprobe.binaries' => $ffprobePath
         ]);
 
         $ffprobe = FFProbe::create([
-            'ffmpeg.binaries'  => exec('which ffmpeg'),
-            'ffprobe.binaries' => exec('which ffprobe')
+            'ffmpeg.binaries'  => $ffmpegPath,
+            'ffprobe.binaries' => $ffprobePath
         ]);
 
         $videoDuration = $ffprobe

@@ -12,7 +12,9 @@
         "vluzrmos/lumen-cors": "2.1.*",
         "kunalvarma05/dropbox-php-sdk": "^0.2.1",
         "php-ffmpeg/php-ffmpeg": "^0.18.0",
-        "tymon/jwt-auth": "^1.0"
+        "tymon/jwt-auth": "^1.0",
+        "symfony/var-dumper": "^3.4",
+        "league/flysystem": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

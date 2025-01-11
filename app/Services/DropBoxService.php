@@ -5,6 +5,7 @@ namespace App\Services;
 use Kunnu\Dropbox\DropboxApp;
 use Kunnu\Dropbox\Dropbox;
 use Kunnu\Dropbox\DropboxFile;
+use Log;
   
 class DropBoxService
 {
@@ -21,7 +22,11 @@ class DropBoxService
 
     public function getFileLink($path)
     {
-        return $this->dropbox->getTemporaryLink($path)->getLink();
+        // Log::info(basename(__FILE__) . ':' . __LINE__);
+        $temporaryLink = $this->dropbox->getTemporaryLink($path);
+        $link = $temporaryLink->getLink();
+
+        return $link;
     }
 
     public function uploadFile($pathToLocalFile, $path)

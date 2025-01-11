@@ -104,5 +104,9 @@ $app->router->group([
 });
 
 $app->configure('auth');
+$app->configure('filesystems');
+$app->withFacades();
+
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 
 return $app;
