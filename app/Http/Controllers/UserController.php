@@ -11,12 +11,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Services\DropBoxService;
 use Illuminate\Support\Facades\Hash;
+use App\Services\FileService;
 
 class UserController extends Controller
 {
-    public function __construct(DropBoxService $dropBoxService)
+    public $dropBoxService;
+    public $fileService;
+
+    public function __construct(DropBoxService $dropBoxService, FileService $fileService)
     {
         $this->dropBoxService = $dropBoxService;
+        $this->fileService = $fileService;
     }
 
     public function all()
@@ -32,7 +37,8 @@ class UserController extends Controller
 
         $data = $user->toArray();
 
-        $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+        // $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+        $photoUrl = $this->fileService->getFileLink($user->photo);
 
         $data['photo'] = $photoUrl;
 
@@ -86,7 +92,8 @@ class UserController extends Controller
 
         $data = $user->toArray();
 
-        $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+        // $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+        $photoUrl = $this->fileService->getFileLink($user->photo);
 
         $data['photo'] = $photoUrl;
 

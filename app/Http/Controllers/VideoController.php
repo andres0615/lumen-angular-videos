@@ -85,11 +85,13 @@ class VideoController extends Controller
 
         $data = $video->toArray();
 
-        $videoUrl = $this->dropBoxService->getFileLink($video->video);
+        // $videoUrl = $this->dropBoxService->getFileLink($video->video);
+        $videoUrl = $this->fileService->getFileLink($video->video);
 
         $data['video'] = $videoUrl;
 
-        $userPhoto = $this->dropBoxService->getFileLink($video->user_photo);
+        // $userPhoto = $this->dropBoxService->getFileLink($video->user_photo);
+        $userPhoto = $this->fileService->getFileLink($video->user_photo);
 
         $data['user_photo'] = $userPhoto;
 
@@ -134,7 +136,8 @@ class VideoController extends Controller
 
         $data = $video->toArray();
 
-        $videoUrl = $this->dropBoxService->getFileLink($video->video);
+        // $videoUrl = $this->dropBoxService->getFileLink($video->video);
+        $videoUrl = $this->fileService->getFileLink($video->video);
 
         $data['video'] = $videoUrl;
 
@@ -238,12 +241,14 @@ class VideoController extends Controller
             $record = $video;
 
             if ($withVideoUrl == true) {
-                $videoUrl = $this->dropBoxService->getFileLink($video->video);
+                // $videoUrl = $this->dropBoxService->getFileLink($video->video);
+                $videoUrl = $this->fileService->getFileLink($video->video);
 
                 $record->video = $videoUrl;
             }
 
-            $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            // $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            $videoThumbnail = $this->fileService->getFileLink($video->thumbnail);
 
             $record->thumbnail = $videoThumbnail;
 
@@ -332,7 +337,8 @@ class VideoController extends Controller
 
             //$record['video'] = $videoUrl;
 
-            $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            // $videoThumbnail = $this->dropBoxService->getFileLink($video->thumbnail);
+            $videoThumbnail = $this->fileService->getFileLink($video->thumbnail);
 
             $record->thumbnail = $videoThumbnail;
 

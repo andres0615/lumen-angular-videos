@@ -50,7 +50,8 @@ class CommentController extends Controller
 
         $data = $comment->toArray();
 
-        $userPhoto = $this->dropBoxService->getFileLink(Auth::user()->photo);
+        // $userPhoto = $this->dropBoxService->getFileLink(Auth::user()->photo);
+        $userPhoto = $this->fileService->getFileLink(Auth::user()->photo);
 
         $data['user_photo'] = $userPhoto;
         $data['username'] = Auth::user()->username;
@@ -112,7 +113,8 @@ class CommentController extends Controller
                 Log::info($iteracion);
                 $record = $comment;
                 Log::info(basename(__FILE__) . ':' . __LINE__);
-                $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
+                // $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
+                $record->user_photo = $this->fileService->getFileLink($comment->user_photo);
                 Log::info(basename(__FILE__) . ':' . __LINE__);
 
                 $data = $record;
