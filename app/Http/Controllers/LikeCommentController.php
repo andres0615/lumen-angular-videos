@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\LikeComment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\GetCommentLikes;
 
 class LikeCommentController extends Controller
 {
@@ -44,9 +45,10 @@ class LikeCommentController extends Controller
 
     public function getCommentLikes($commentId)
     {
-        $commentLikes = LikeComment::where('comment_id', $commentId)
-                        ->where('type', true)
-                        ->count();
+
+        $likeCommentModel = new LikeComment();
+        
+        $commentLikes = $likeCommentModel->getCommentLikes($commentId);
 
         $data = ['likes' => $commentLikes];
 
@@ -55,9 +57,9 @@ class LikeCommentController extends Controller
 
     public function getCommentDislikes($commentId)
     {
-        $commentDislikes = LikeComment::where('comment_id', $commentId)
-                        ->where('type', false)
-                        ->count();
+        $likeCommentModel = new LikeComment();
+
+        $commentDislikes = $likeCommentModel->getCommentDislikes($commentId);
 
         $data = ['dislikes' => $commentDislikes];
 

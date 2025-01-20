@@ -105,8 +105,12 @@ $app->router->group([
 
 $app->configure('auth');
 $app->configure('filesystems');
+$app->configure('queue');
 $app->withFacades();
 
 $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
+
+$app->configure('database');
+// $app->withEloquent();
 
 return $app;
