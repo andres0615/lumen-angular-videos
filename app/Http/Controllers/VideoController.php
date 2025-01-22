@@ -20,15 +20,15 @@ class VideoController extends Controller
 {
     public $dropBoxService;
     public $fileService;
-    public $dbxThumbnailPath;
-    public $dbxVideoPath;
+    public $thumbnailFolder;
+    public $videoFolder;
 
     public function __construct(DropBoxService $dropBoxService, FileService $fileService)
     {
         $this->dropBoxService = $dropBoxService;
         $this->fileService = $fileService;
-        $this->dbxThumbnailPath = '/thumbnail/';
-        $this->dbxVideoPath = '/video/';
+        $this->thumbnailFolder = '/thumbnail/';
+        $this->videoFolder = '/video/';
     }
 
     public function all()
@@ -107,16 +107,17 @@ class VideoController extends Controller
         $video->user_id = $request->user_id;
 
         if ($request->exists('video')) {
-            $thumbnailPath = $this->storeThumbnail($request->video->path());
+            $thumbnailStoragePath = $this->storeThumbnail($request->video->path());
 
             $videoName = $this->getVideoName($request->video->extension());
 
-            $dropBoxPath = $this->dbxVideoPath.$videoName;
+            $videoStoragePath = $this->videoFolder.$videoName;
 
-            $this->dropBoxService->uploadFile($request->video->path(), $dropBoxPath);
+            // $this->dropBoxService->uploadFile($request->video->path(), $dropBoxPath);
+            $this->fileService->uploadFile($request->video->path(), $videoStoragePath);
 
-            $video->video = $dropBoxPath;
-            $video->thumbnail = $thumbnailPath;
+            $video->video = $videoStoragePath;
+            $video->thumbnail = $thumbnailStoragePath;
         }
 
         $video->save();
@@ -168,9 +169,10 @@ class VideoController extends Controller
     public function storeThumbnail($videoPath)
     {
         $thumbnailName = $this->getThumbnailName();
-        $thumbnailPath = $this->dbxThumbnailPath . $thumbnailName;
+        $thumbnailStoragePath = $this->thumbnailFolder . $thumbnailName;
 
-        $localPath = storage_path('app/' . $thumbnailName);
+        // some filesystem services require temporal file storage
+        $thumbnailTmpPath = storage_path('app/tmp/' . $thumbnailName);
 
         exec('where ffmpeg',$ffmpegCommandOutput);
         $ffmpegPath = $ffmpegCommandOutput[0];
@@ -206,13 +208,12 @@ class VideoController extends Controller
 
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
-        $frame->save($localPath);
+        $frame->save($thumbnailTmpPath);
 
-        $dropBoxPath = $thumbnailPath;
+        // $this->dropBoxService->uploadFile($thumbnailTmpPath, $thumbnailStoragePath);
+        $this->fileService->uploadFile($thumbnailTmpPath, $thumbnailStoragePath);
 
-        $this->dropBoxService->uploadFile($localPath, $dropBoxPath);
-
-        return $dropBoxPath;
+        return $thumbnailStoragePath;
     }
 
     public function getVideosByUserId($userId, $withVideoUrl = false)
@@ -272,7 +273,7 @@ class VideoController extends Controller
         while (!$unique) {
             $name = str_random(8) . '.png';
 
-            $path = $this->dbxThumbnailPath . $name;
+            $path = $this->thumbnailFolder . $name;
 
             //Si el path no ha sido usado antes quiere decir que es unico
 
@@ -296,7 +297,7 @@ class VideoController extends Controller
         while (!$unique) {
             $name = str_random(8) . '.' . $ext;
 
-            $path = $this->dbxVideoPath . $name;
+            $path = $this->videoFolder . $name;
 
             //Si el path no ha sido usado antes quiere decir que es unico
 

@@ -17,9 +17,11 @@ class FileService
         return $url;
     }
 
-    public function uploadFile($file, $path)
+    public function uploadFile($pathToLocalFile, $path)
     {
-        return Storage::put($path, $file);
+        Storage::disk('public')->put($path, $pathToLocalFile);
+        
+        return true;
     }
 
     public function deleteFile($path)

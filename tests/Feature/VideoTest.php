@@ -76,10 +76,9 @@ class VideoTest extends TestCase
             'user_id' => $user->id
         ];
 
-        $response = $this->call('POST', '/video', $payload);
+        Log::info('=============== fd3lyx3benvfhs2 ==============');
 
-        // $responseContent = $response->getContent();
-        // dump($responseContent);
+        $response = $this->call('POST', '/video', $payload);
 
         $this->assertEquals(200, $response->status());
     }

@@ -54,7 +54,8 @@ class UserController extends Controller
         if ($request->exists('photo')) {
             $dropBoxPath = '/'.$request->photo->getClientOriginalName();
 
-            $this->dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
+            // $this->dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
+            $this->fileService->uploadFile($request->photo->path(), $dropBoxPath);
 
             $user->photo = $dropBoxPath;
         }
@@ -81,7 +82,8 @@ class UserController extends Controller
         if ($request->exists('photo')) {
             $dropBoxPath = '/'.$request->photo->getClientOriginalName();
 
-            $this->dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
+            // $this->dropBoxService->uploadFile($request->photo->path(), $dropBoxPath);
+            $this->fileService->uploadFile($request->photo->path(), $dropBoxPath);
 
             $user->photo = $dropBoxPath;
         }
