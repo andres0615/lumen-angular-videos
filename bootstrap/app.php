@@ -106,6 +106,7 @@ $app->router->group([
 $app->configure('auth');
 $app->configure('filesystems');
 $app->configure('queue');
+$app->configure('cache');
 $app->withFacades();
 
 $app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);

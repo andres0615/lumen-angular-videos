@@ -7,18 +7,23 @@ use Illuminate\Http\Request;
 use Log;
 use Illuminate\Support\Facades\Hash;
 use App\Services\DropBoxService;
+use App\Services\FileService;
 use App\User;
 
 class AuthController extends Controller
 {
+    public $dropBoxService;
+    public $fileService;
+
     /**
      * Create a new AuthController instance.
      *
      * @return void
      */
-    public function __construct(DropBoxService $dropBoxService)
+    public function __construct(DropBoxService $dropBoxService, FileService $fileService)
     {
         $this->dropBoxService = $dropBoxService;
+        $this->fileService = $fileService;
     }
 
     /**
@@ -47,15 +52,22 @@ class AuthController extends Controller
      */
     public function me(Request $request)
     {
-        $user = Auth::user();
+        try {
+            $user = Auth::user();
 
-        $data = $user->toArray();
+            $data = $user->toArray();
 
-        $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+            // $photoUrl = $this->dropBoxService->getFileLink($user->photo);
+            $photoUrl = $this->fileService->getFileLink($user->photo);
 
-        $data['photo'] = $photoUrl;
+            $data['photo'] = $photoUrl;
 
-        return response()->json($data);
+            return response()->json($data);
+        } catch (\Throwable $th) {
+            // throw $th;
+            abort(500,$th->getMessage());
+        }
+        
     }
 
     /**

@@ -14,7 +14,7 @@ use App\Services\FileService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFProbe;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class VideoController extends Controller
 {
