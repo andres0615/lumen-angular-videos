@@ -85,9 +85,14 @@ class VideoTest extends TestCase
 
     public function testUpdateFunction()
     {
+        Log::info('=============== opoiatb9azxnu0y ==============');
+
         $faker = Faker\Factory::create();
 
-        $video = Video::all()->shuffle()->first();
+        // create video
+
+        $video = factory(Video::class)->create();
+
         $id = $video->id;
 
         $name = 'test.mp4';
@@ -98,7 +103,7 @@ class VideoTest extends TestCase
             'description' => $faker->sentence,
         ];
 
-        $response = $this->call('put', '/video/' . $id, $payload);
+        $response = $this->call('post', '/video/' . $id, $payload);
 
         $this->assertEquals(200, $response->status());
     }

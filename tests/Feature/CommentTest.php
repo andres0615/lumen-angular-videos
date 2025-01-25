@@ -7,6 +7,8 @@ use App\Comment;
 use App\Video;
 use App\LikeComment;
 use Illuminate\Support\Facades\Log;
+use Tymon\JWTAuth\Facades\JWTAuth;
+// use Tymon\JWTAuth\JWTAuth;
 
 class CommentTest extends TestCase
 {
@@ -51,12 +53,20 @@ class CommentTest extends TestCase
 
     public function testStoreFunction()
     {
+        Log::info('=============== aq4t75mrcrfl3rl ==============');
+
         $faker = Faker\Factory::create();
 
-        $user = User::all()->shuffle()->first();
-        $video = Video::all()->shuffle()->first();
+        // create user and video
 
-        $this->actingAs($user);
+        $user = factory(User::class)->create();
+        $video = factory(Video::class)->create();
+
+        // login user
+
+        $token = JWTAuth::fromUser($user);
+
+        // create comment
 
         $payload = [
             'comment' => $faker->paragraph,
@@ -64,7 +74,9 @@ class CommentTest extends TestCase
             'video_id' => $video->id
         ];
 
-        $response = $this->call('POST', '/comment', $payload);
+        $url = '/comment?token=' . $token;
+
+        $response = $this->call('POST', $url, $payload);
 
         $this->assertEquals(200, $response->status());
     }
