@@ -14,6 +14,7 @@
 $router->get('/', function () use ($router) {
     //return $router->app->version();
     //phpinfo();
+    echo "Lumen Angular Videos Api";
 });
 
 /**
