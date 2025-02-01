@@ -46,8 +46,8 @@ return [
             'ffprobe' => storage_path('app/ffmpeg/windows/ffprobe.exe'),
         ],
         'linux' => [
-            'ffmpeg' => storage_path('app/ffmpeg/windows/ffmpeg'),
-            'ffprobe' => storage_path('app/ffmpeg/windows/ffprobe'),
+            'ffmpeg' => storage_path('app/ffmpeg/linux/ffmpeg'),
+            'ffprobe' => storage_path('app/ffmpeg/linux/ffprobe'),
         ]
     ],
 
