@@ -103,6 +103,7 @@ $app->router->group([
     require __DIR__.'/../routes/api.php';
 });
 
+$app->configure('app');
 $app->configure('auth');
 $app->configure('filesystems');
 $app->configure('queue');

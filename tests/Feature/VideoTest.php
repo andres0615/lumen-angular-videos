@@ -4,6 +4,7 @@ use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 use App\User;
 use App\Video;
+use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -63,9 +64,15 @@ class VideoTest extends TestCase
         $name = 'test.mp4';
         $path = storage_path($name);
 
+        Log::info(basename(__FILE__) . ':' . __LINE__);
+        Log::info($path);
+
+        Log::info(is_file($path));
+
         $file = new UploadedFile($path, $name, filesize($path), 'video/mp4', null, true);
 
-        $user = User::all()->shuffle()->first();
+        // $user = User::all()->shuffle()->first();
+        $user = factory(User::class)->create();
 
         // form data
         $payload = [

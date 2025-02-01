@@ -19,7 +19,11 @@ class FileService
 
     public function uploadFile($pathToLocalFile, $path)
     {
-        Storage::disk('public')->put($path, $pathToLocalFile);
+        Log::info('=============== mt4cf91cfs9qfhe ==============');
+        $fileContents = file_get_contents($pathToLocalFile);
+        // Log::info($fileContents);
+        
+        $result = Storage::disk('public')->put($path, $fileContents);
         
         return true;
     }

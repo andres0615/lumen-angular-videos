@@ -174,11 +174,20 @@ class VideoController extends Controller
         // some filesystem services require temporal file storage
         $thumbnailTmpPath = storage_path('app/tmp/' . $thumbnailName);
 
-        exec('where ffmpeg',$ffmpegCommandOutput);
-        $ffmpegPath = $ffmpegCommandOutput[0];
+        // define ffmpeg binaries path
+        if(config('app.os') == 'windows') {
+            $ffmpegBinPath = config('app.ffmpeg_bins.windows.ffmpeg');
+            $ffprobeBinPath = config('app.ffmpeg_bins.windows.ffprobe');
+        } else {
+            $ffmpegBinPath = config('app.ffmpeg_bins.linux.ffmpeg');
+            $ffprobeBinPath = config('app.ffmpeg_bins.linux.ffprobe');
+        }
 
-        exec('where ffprobe',$ffprobeCommandOutput);
-        $ffprobePath = $ffprobeCommandOutput[0];
+        // exec('where ffmpeg',$ffmpegCommandOutput);
+        // $ffmpegPath = $ffmpegCommandOutput[0];
+
+        // exec('where ffprobe',$ffprobeCommandOutput);
+        // $ffprobePath = $ffprobeCommandOutput[0];
 
         // $ffmpeg = FFMpeg::create([
         //     'ffmpeg.binaries'  => exec('which ffmpeg'),
@@ -191,13 +200,13 @@ class VideoController extends Controller
         // ]);
 
         $ffmpeg = FFMpeg::create([
-            'ffmpeg.binaries'  => $ffmpegPath,
-            'ffprobe.binaries' => $ffprobePath
+            'ffmpeg.binaries'  => $ffmpegBinPath,
+            'ffprobe.binaries' => $ffprobeBinPath
         ]);
 
         $ffprobe = FFProbe::create([
-            'ffmpeg.binaries'  => $ffmpegPath,
-            'ffprobe.binaries' => $ffprobePath
+            'ffmpeg.binaries'  => $ffmpegBinPath,
+            'ffprobe.binaries' => $ffprobeBinPath
         ]);
 
         $videoDuration = $ffprobe
