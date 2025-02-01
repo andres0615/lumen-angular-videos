@@ -3,3 +3,5 @@
 
 !public/
 !tmp/
+!ffmpeg/
+!ffmpeg/**
