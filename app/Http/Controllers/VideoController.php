@@ -201,12 +201,14 @@ class VideoController extends Controller
 
         $ffmpeg = FFMpeg::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
-            'ffprobe.binaries' => $ffprobeBinPath
+            'ffprobe.binaries' => $ffprobeBinPath,
+            'ffmpeg.threads'   => 1,
         ]);
 
         $ffprobe = FFProbe::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
-            'ffprobe.binaries' => $ffprobeBinPath
+            'ffprobe.binaries' => $ffprobeBinPath,
+            'ffmpeg.threads'   => 1,
         ]);
 
         $videoDuration = $ffprobe
