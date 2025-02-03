@@ -14,7 +14,9 @@ use App\Services\FileService;
 use FFMpeg\FFMpeg;
 use FFMpeg\Coordinate\TimeCode;
 use FFMpeg\FFProbe;
+use FFMpeg\Media\Frame;
 use Illuminate\Support\Facades\DB;
+use App\Extensions\FFMpeg\CustomFFMpeg;
 
 class VideoController extends Controller
 {
@@ -199,11 +201,23 @@ class VideoController extends Controller
         //     'ffprobe.binaries' => exec('which ffprobe')
         // ]);
 
-        $ffmpeg = FFMpeg::create([
+        // $ffmpeg = FFMpeg::create([
+        //     'ffmpeg.binaries'  => $ffmpegBinPath,
+        //     'ffprobe.binaries' => $ffprobeBinPath,
+        //     'ffmpeg.threads'   => 1,
+        // ]);
+
+        // $ffmpeg = app(\FFMpeg\FFMpeg::class);
+        // $ffmpeg = app()->make(\FFMpeg\FFMpeg::class);
+
+        // $ffmpeg = $ffmpeg::create([
+        $ffmpeg = CustomFFMpeg::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
             'ffprobe.binaries' => $ffprobeBinPath,
             'ffmpeg.threads'   => 1,
         ]);
+
+        // $ffmpeg->getFFMpegDriver()->setAdditionalParameters(['-threads', '1']);
 
         $ffprobe = FFProbe::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
@@ -217,8 +231,14 @@ class VideoController extends Controller
 
         $sec = (int)($videoDuration / 2);
 
+        Log::info(basename(__FILE__) . ':' . __LINE__);
+        Log::info($videoPath);
+
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
+        // $frame->addFilter('-threads 1');
+        // $frame->filters()->custom('-threads');
+        // $frame->filters()->custom('1');
         $frame->save($thumbnailTmpPath);
 
         // $this->dropBoxService->uploadFile($thumbnailTmpPath, $thumbnailStoragePath);
