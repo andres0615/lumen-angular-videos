@@ -16,14 +16,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 10)->create();
-        factory(Video::class, 10)->create();
-        factory(LikeVideo::class, 5)->create();
-        factory(Comment::class, 10)->create();
-        factory(LikeComment::class, 5)->create();
+        // factory(User::class, 10)->create();
+        // factory(Video::class, 10)->create();
+        // factory(LikeVideo::class, 5)->create();
+        // factory(Comment::class, 10)->create();
+        // factory(LikeComment::class, 5)->create();
 
-        $this->call('CommentsTableSeeder');
         $this->call('UsersTableSeeder');
         $this->call('VideosTableSeeder');
+        $this->call('CommentsTableSeeder');
+        $this->call('LikeVideoTableSeeder');
+        $this->call('LikeCommentTableSeeder');
     }
 }

@@ -13,12 +13,19 @@ class VideosTableSeeder extends Seeder
      */
     public function run()
     {
-        $video = factory(Video::class)->make();
+        // // se crean videos fake
+        // factory(Video::class, 10)->create();
 
-        $user = User::where('username', 'admin')
-                ->first();
+        // // se crea un video para el usuario admin
+        // $video = factory(Video::class)->make();
 
-        $video->user_id = $user->id;
-        $video->save();
+        // $user = User::where('username', 'admin')
+        //         ->first();
+
+        // $video->user_id = $user->id;
+        // $video->save();
+
+        // se crean videos fake
+        $videos = factory(Video::class, 10)->create();
     }
 }

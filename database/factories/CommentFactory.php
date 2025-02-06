@@ -18,14 +18,18 @@ use App\Video;
 $factory->define(App\Comment::class, function (
     Faker\Generator $faker
 ) {
-    $user = factory(User::class)->create();
-    $video = factory(Video::class)->create();
     
     //Log::info('------'.$user.'-------');
 
     return [
         'comment' => $faker->sentence,
-        'user_id' => $user->id,
-        'video_id' => $video->id
+        'user_id' => function() {
+            $user = factory(User::class)->create();
+            return $user->id;
+        },
+        'video_id' => function() {
+            $video = factory(Video::class)->create();
+            return $video->id;
+        }
     ];
 });

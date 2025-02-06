@@ -17,15 +17,15 @@ use App\User;
 $factory->define(App\Video::class, function (
     Faker\Generator $faker
 ) {
-    $user = factory(User::class)->create();
-    
-    //Log::info('------'.$user.'-------');
 
     return [
         'title' => $faker->sentence,
         'description' => $faker->sentence,
         'video' => '/video/test.mp4',
         'thumbnail' => '/thumbnail/thumbnail.png',
-        'user_id' => $user->id
+        'user_id' => function() {
+            $user = factory(User::class)->create();
+            return $user->id;
+        }
     ];
 });
