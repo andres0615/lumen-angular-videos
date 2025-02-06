@@ -17,6 +17,6 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'username' => $faker->userName,
         'password' => Hash::make($faker->password),
-        'photo' => '/user/default_user.png',
+        'photo' => '/demo/user/default_user.png',
     ];
 });

@@ -14,22 +14,15 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        // se crean usuarios fake
-        // factory(User::class, 10)->create();
+        $user = factory(User::class)->create([
+            'username' => 'admin',
+            'password' => Hash::make('admin'),
+            'photo' => '/demo/user/default_user.png',
+        ]);
 
-        // Se crea usuario admin.
-        $user = new User;
-        $user->username = 'admin';
-        $user->password = Hash::make('admin');
-        $user->photo = '/user/default_user.png';
-        $user->save();
-
-        // // se crean usuarios fake
-        // $users = factory(App\User::class, 10)->create();
-        
-        // // se crean videos fake
-        // $users->each(function ($user) {
-        //     factory(App\Video::class)->create(['user_id' => $user->id]);
-        // });
+        // se crea un video para el usuario admin
+        $video = factory(Video::class)->create([
+            'user_id' => $user->id
+        ]);
     }
 }

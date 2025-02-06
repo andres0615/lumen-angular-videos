@@ -50,6 +50,7 @@ class VideoController extends Controller
                     )
                      /*->where('status', '<>', 1)
                      ->groupBy('status')*/
+                     ->orderBy('id','desc')
                      ->limit(10)
                      ->get()
                      ->shuffle();

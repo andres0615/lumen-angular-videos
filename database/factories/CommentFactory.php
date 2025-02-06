@@ -18,8 +18,6 @@ use App\Video;
 $factory->define(App\Comment::class, function (
     Faker\Generator $faker
 ) {
-    
-    //Log::info('------'.$user.'-------');
 
     return [
         'comment' => $faker->sentence,
