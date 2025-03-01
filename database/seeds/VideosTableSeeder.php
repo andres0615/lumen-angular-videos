@@ -14,6 +14,6 @@ class VideosTableSeeder extends Seeder
     public function run()
     {
         // se crean videos fake
-        $videos = factory(Video::class, 10)->create();
+        $videos = factory(Video::class, 15)->create();
     }
 }
