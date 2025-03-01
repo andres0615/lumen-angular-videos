@@ -40,7 +40,15 @@ $factory->define(App\Video::class, function (
     return [
         'title' => $faker->sentence,
         'description' => $faker->sentence,
-        'video' => $demoVideo['video'],
+        // 'video' => $demoVideo['video'],
+        'video' => function()use($demoVideo){
+            $videoPath = $demoVideo['video'];
+
+            // se agrega un hash diferente a cada video para que el frontend detecte el cambio
+            $hash = str_random(10);
+            $videoPath = $videoPath . '?hash=' . $hash;
+            return $videoPath;
+        },
         'thumbnail' => $demoVideo['thumbnail'],
         'user_id' => function() {
             $user = factory(User::class)->create();
