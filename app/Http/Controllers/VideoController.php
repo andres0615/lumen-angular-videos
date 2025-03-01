@@ -17,6 +17,7 @@ use FFMpeg\FFProbe;
 use FFMpeg\Media\Frame;
 use Illuminate\Support\Facades\DB;
 use App\Extensions\FFMpeg\CustomFFMpeg;
+use Illuminate\Database\Eloquent\Builder;
 
 class VideoController extends Controller
 {
@@ -33,8 +34,9 @@ class VideoController extends Controller
         $this->videoFolder = '/video/';
     }
 
-    public function all()
+    public function all(Request $request)
     {
+        /** @var Builder $videos */
         $videos = DB::table('videos')
                     ->leftJoin('users', 'videos.user_id', '=', 'users.id')
                     ->select(
@@ -51,8 +53,14 @@ class VideoController extends Controller
                      /*->where('status', '<>', 1)
                      ->groupBy('status')*/
                      ->orderBy('id','desc')
-                     ->limit(10)
-                     ->get()
+                     ->limit(10);
+
+        if($request->exists('skipVideoId')){
+            $skipVideoId = $request->get('skipVideoId');
+            $videos = $videos->where('videos.id', '!=', $skipVideoId);
+        }
+
+        $videos = $videos->get()
                      ->shuffle();
 
         $data = [];
