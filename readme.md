@@ -1,6 +1,6 @@
 # Lumen Angular Videos (Backend)
 
-Plataforma de videos parecida a youtube, backend desarrollado con el microframework basado en laravel [lumen](https://lumen.laravel.com/) 5.5.
+Plataforma de videos basada en youtube, backend desarrollado con el microframework basado en laravel [lumen](https://lumen.laravel.com/) 5.5.
 
 - Estandares de programacion PSR.
 - [Convencional commits](https://www.conventionalcommits.org/en/v1.0.0/).
