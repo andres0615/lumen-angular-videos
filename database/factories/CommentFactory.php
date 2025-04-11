@@ -20,7 +20,7 @@ $factory->define(App\Comment::class, function (
 ) {
 
     return [
-        'comment' => $faker->sentence,
+        'comment' => $faker->text(220),
         'user_id' => function() {
             $user = factory(User::class)->create();
             return $user->id;
