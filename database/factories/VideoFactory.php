@@ -39,7 +39,7 @@ $factory->define(App\Video::class, function (
 
     return [
         'title' => $faker->sentence,
-        'description' => $faker->sentence,
+        'description' => $faker->sentence(30,false),
         // 'video' => $demoVideo['video'],
         'video' => function()use($demoVideo){
             $videoPath = $demoVideo['video'];
