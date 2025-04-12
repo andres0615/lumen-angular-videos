@@ -193,40 +193,12 @@ class VideoController extends Controller
             $ffmpegBinPath = config('app.ffmpeg_bins.linux.ffmpeg');
             $ffprobeBinPath = config('app.ffmpeg_bins.linux.ffprobe');
         }
-
-        // exec('where ffmpeg',$ffmpegCommandOutput);
-        // $ffmpegPath = $ffmpegCommandOutput[0];
-
-        // exec('where ffprobe',$ffprobeCommandOutput);
-        // $ffprobePath = $ffprobeCommandOutput[0];
-
-        // $ffmpeg = FFMpeg::create([
-        //     'ffmpeg.binaries'  => exec('which ffmpeg'),
-        //     'ffprobe.binaries' => exec('which ffprobe')
-        // ]);
-
-        // $ffprobe = FFProbe::create([
-        //     'ffmpeg.binaries'  => exec('which ffmpeg'),
-        //     'ffprobe.binaries' => exec('which ffprobe')
-        // ]);
-
-        // $ffmpeg = FFMpeg::create([
-        //     'ffmpeg.binaries'  => $ffmpegBinPath,
-        //     'ffprobe.binaries' => $ffprobeBinPath,
-        //     'ffmpeg.threads'   => 1,
-        // ]);
-
-        // $ffmpeg = app(\FFMpeg\FFMpeg::class);
-        // $ffmpeg = app()->make(\FFMpeg\FFMpeg::class);
-
-        // $ffmpeg = $ffmpeg::create([
+        
         $ffmpeg = CustomFFMpeg::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
             'ffprobe.binaries' => $ffprobeBinPath,
             'ffmpeg.threads'   => 1,
         ]);
-
-        // $ffmpeg->getFFMpegDriver()->setAdditionalParameters(['-threads', '1']);
 
         $ffprobe = FFProbe::create([
             'ffmpeg.binaries'  => $ffmpegBinPath,
@@ -245,9 +217,6 @@ class VideoController extends Controller
 
         $video = $ffmpeg->open($videoPath);
         $frame = $video->frame(TimeCode::fromSeconds($sec));
-        // $frame->addFilter('-threads 1');
-        // $frame->filters()->custom('-threads');
-        // $frame->filters()->custom('1');
         $frame->save($thumbnailTmpPath);
 
         // $this->dropBoxService->uploadFile($thumbnailTmpPath, $thumbnailStoragePath);
