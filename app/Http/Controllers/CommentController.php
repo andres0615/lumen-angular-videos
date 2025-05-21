@@ -57,6 +57,7 @@ class CommentController extends Controller
 
         $data['user_photo'] = $userPhoto;
         $data['username'] = Auth::user()->username;
+        $data['comment_ago'] = $comment->getDateAgo();
 
         return response()->json($data);
     }

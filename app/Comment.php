@@ -48,10 +48,10 @@ class Comment extends Model
         return $comments;
     }
 
-    public function getDateAgo($commentDate)
+    public function getDateAgo()
     {
         $now = new \DateTime();
-        $commentDate = new \DateTime($commentDate);
+        $commentDate = new \DateTime($this->created_at);
         $commentAgo = $now->diff($commentDate);
         Log::info(json_encode($commentAgo));
 
@@ -86,10 +86,11 @@ class Comment extends Model
                 ->orderBy('updated_at', 'DESC')
                 ->get();
 
-        $comments = $comments->map(function ($comment) {
+        $comments = $comments->map(function (self $comment) {
             $comment->user_photo = $this->fileService->getFileLink($comment->user_photo);
 
-            $commentAgo = $this->getDateAgo($comment->created_at);
+            // $commentAgo = $this->getDateAgo($comment->created_at);
+            $commentAgo = $comment->getDateAgo();
             // $commentAgo = $comment->created_at->diff();
             $comment->comment_ago = $commentAgo;
             return $comment;
