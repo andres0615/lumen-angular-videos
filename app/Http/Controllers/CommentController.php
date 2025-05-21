@@ -27,7 +27,9 @@ class CommentController extends Controller
 
     public function all()
     {
-        $comments = Comment::all();
+        // $comments = Comment::all();
+        $commentModel = new Comment();
+        $comments = $commentModel->getAll();
 
         return response()->json($comments);
     }
@@ -93,35 +95,9 @@ class CommentController extends Controller
     {
 
         try{
-        
-            $comments = DB::table('comments')
-                ->leftJoin('users', 'comments.user_id', 'users.id')
-                ->select('comments.*', 'users.username', 'users.photo as user_photo')
-                ->where('video_id', $id)
-                ->orderBy('updated_at', 'DESC')
-                ->get();
 
-            $data = [];
-
-            // echo basename(__FILE__) . ':' . __LINE__ . "\n";
-            Log::info("============= getCommentsByVideoId ===========");
-            Log::info(basename(__FILE__) . ':' . __LINE__);
-            $iteracion = 1;
-
-            foreach ($comments as $comment) {
-                Log::info(basename(__FILE__) . ':' . __LINE__);
-                Log::info($iteracion);
-                $record = $comment;
-                Log::info(basename(__FILE__) . ':' . __LINE__);
-                // $record->user_photo = $this->dropBoxService->getFileLink($comment->user_photo);
-                $record->user_photo = $this->fileService->getFileLink($comment->user_photo);
-                Log::info(basename(__FILE__) . ':' . __LINE__);
-
-                $data = $record;
-                $iteracion++;
-            }
-
-            Log::info("============= End getCommentsByVideoId ===========");
+            $commentModel = new Comment();
+            $comments = $commentModel->getCommentsByVideoId($id);
 
             return response()->json($comments);
         } catch(Exception $e) {
