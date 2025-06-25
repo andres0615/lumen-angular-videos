@@ -5,3 +5,5 @@
 !tmp/
 !ffmpeg-bk/
 !ffmpeg-bk/**
+!screenshots/
+!screenshots/**
