@@ -1,6 +1,8 @@
 # Lumen Angular Videos (Backend)
 
-Plataforma de videos basada en youtube, backend desarrollado con [Laravel](https://laravel.com/docs/5.5).
+Plataforma web inspirada en YouTube que permite a los usuarios explorar, subir y gestionar videos de manera eficiente.
+
+Backend desarrollado con [Laravel](https://laravel.com/docs/5.5).
 
 - Estandares de programacion PSR
 - [Convencional commits](https://www.conventionalcommits.org/en/v1.0.0/)
