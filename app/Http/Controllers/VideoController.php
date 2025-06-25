@@ -212,6 +212,10 @@ class VideoController extends Controller
 
         $sec = (int)($videoDuration / 2);
 
+        $limitSec = $this->getLimitSec($videoDuration, $sec);
+
+        $sec = rand($sec, $limitSec);
+
         Log::info(basename(__FILE__) . ':' . __LINE__);
         Log::info($videoPath);
 
@@ -356,5 +360,22 @@ class VideoController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function getLimitSec(int $videoDuration, int $sec)
+    {
+        $maxSec = 0;
+
+        for ($i=0; $i < 5; $i++) {
+            if ($i > $videoDuration) {
+                break;
+            }
+
+            $maxSec += $i;
+        }
+
+        $limitSec = $sec + $maxSec;
+
+        return $limitSec;
     }
 }
